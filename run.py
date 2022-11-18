@@ -25,21 +25,20 @@ def main():
 
     for row in rows:
         watch.append(row)
-        """ print(len(watch)) """
-    print(watch[0], len(watch[0]))
-    print(watch[2]) 
-    print(len(watch[2]))   
+     
     keys = watch[0]
+    values = watch[1:]
+    print(values, 'test')
     
-    """ print(watch[0:2]) """
-    for item in watch:
-        """ print(item[0], 'test') """
+    for item in values[0]:
+        val = item.split(',')
+        print(val, len(val), 'why?')
 
+    for xy in values:
+        print(xy.split(','), len(xy), 'now?')
     
-   
+  
     
-    """ type(file)
-    csvreader = csv.reader(file)
-    print(csvreader)
- """
+    
+    
 main()
