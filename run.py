@@ -2,6 +2,38 @@ import random
 import csv
 import re
 
+val_new = []
+keys = []
+
+
+
+
+def clean_file():
+    file = open('test_film.csv')
+    rows = csv.reader(file, delimiter=',')
+    watch = []
+
+    for row in rows:
+        watch.append(row)
+     
+    keys.append(watch[0])
+    print(keys)
+    values = watch[1:]
+
+    #val_new = []
+    for item in values:
+        #replace all ',' into ';' inbetween ""
+        new_str = re.sub(r'"[^"]+"', lambda x: x.group().replace(',', ';'), item[0])
+        val = new_str.split(',')
+        new_val = []
+        #replaces all ';' into , (after splitting!)
+        for dot_comma in val:
+            new_val.append(dot_comma.replace(';', ','))
+        val_new.append(new_val)
+    #print(val_new)
+
+    return keys
+
 
 def get_selection():
     """
@@ -14,16 +46,20 @@ def get_selection():
         pre_choice = input('Enter your choice: \n')
         # use allways \n in inputs!
 
-        accepted_inputs = ['r', 'p', 'R', 'P']
+        random_inputs = ['r', 'R']
+        pre_choice_inputs = ['p', 'P']
         try:
-            if pre_choice in accepted_inputs:
+            if pre_choice in random_inputs:
+                final_rand_choice = random.choice(val_new)
+                #print(random.choice(val_new))
+                print(*final_rand_choice, sep = ', ')
                 print('Data is valid!')
                 break
             else:
-                raise TypeError(f'Invalid data: {pre_choice}! Please try again!\n')
-        except TypeError as type_error:
+                raise ValueError(f'Invalid data: {pre_choice}! Please try again!\n')
+        except ValueError as value_error:
             # type_error gets a variable
-            print(type_error)
+            print(value_error)
     return True
 
 
@@ -34,33 +70,28 @@ def pre_selection():
     print('Do you want to watch a movie or a series?')
 
 
+def get_final_coice():
+    """
+    run all functions
+    """
+    final_selection = {}
+    print(keys, val_new)
+    for key, value in zip(keys, val_new):
+        final_selection.update({key: value})
+
+
+
+
+
 def main():
     """
     run all functions
     """
+
+    clean_file()
     get_selection()
 
-    file = open('test_film.csv')
-    rows = csv.reader(file, delimiter=',')
-    watch = []
-
-    for row in rows:
-        watch.append(row)
-     
-    keys = watch[0]
-    values = watch[1:]
-
-    val_new = []
-    for item in values:
-        #replace all ',' into ';' inbetween ""
-        new_str = re.sub(r'"[^"]+"', lambda x: x.group().replace(',', ';'), item[0])
-        val = new_str.split(',')
-        new_val = []
-        #replaces all ';' into , (after splitting!)
-        for dot_comma in val:
-            new_val.append(dot_comma.replace(';', ','))
-        val_new.append(new_val)
-    #print(val_new[0])
+    get_final_coice()
 
     
 
