@@ -51,6 +51,17 @@ def clean_file():
 
     # return keys
 
+myDict = {'age': ['12'], 'address': ['34 Main Street, 212 First Avenue'],
+          'firstName': ['Alan', 'Mary-Ann'], 'lastName': ['Stone', 'Lee']}
+
+def search(myDict, lookup):
+    for key, value in myDict.items():
+        for v in value:
+            if lookup in v:
+                return key
+
+search(myDict, 'Mary')
+
 
 def get_selection():
     """
@@ -92,15 +103,15 @@ def get_selection():
                                 for key, value in genres.items():
                                     if key == genere_answer:
                                         genere_answer = value
+                                        print(genere_answer)
+                                        while True:
+                                            final_choice = random.choice(val_new)
+                                            if genere_answer in final_choice:
+                                                return final_selection
                                     else:
                                         print(f'Invalid data: {genere_answer}! Please try again!\n')
-                                while True:
-                                    final_choice = random.choice(val_new)
-                                    if genere_answer in final_choice:
-                                        return final_selection
-                                    else:
-                                        print(f'Invalid data: {genere_answer}! Please try again!\n')
-                                break
+                                        break
+                                        
                             else:
                                 print(f'Invalid data: {answer_media_type}! Please try again!\n')
                     # break
