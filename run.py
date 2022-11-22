@@ -85,6 +85,22 @@ def get_selection():
                             print(answer_media_type)
                             if 'n' in answer_media_type or 'N' in answer_media_type:
                                 return final_selection
+                            elif 'y' in answer_media_type or 'Y' in answer_media_type:
+                                genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama', 'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids', 'm': 'Mystery', 'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
+                                print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
+                                genere_answer = input('Enter genre: ')
+                                for key, value in genres.items():
+                                    if key == genere_answer:
+                                        genere_answer = value
+                                    else:
+                                        print(f'Invalid data: {genere_answer}! Please try again!\n')
+                                while True:
+                                    final_choice = random.choice(val_new)
+                                    if genere_answer in final_choice:
+                                        return final_selection
+                                    else:
+                                        print(f'Invalid data: {genere_answer}! Please try again!\n')
+                                break
                             else:
                                 print(f'Invalid data: {answer_media_type}! Please try again!\n')
                     # break
