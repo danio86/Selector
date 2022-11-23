@@ -62,10 +62,10 @@ def search_genre(movie, choice):
     Get choice import from user
     """
     for key, value in movie.items():
-        for choi in value:
-            if choice in choi:
-                return movie
-
+        print(movie)
+        print(choice)
+        if choice in value:
+            return movie
 
 #search_genre(genres, 'genre_choice')
 
@@ -114,7 +114,9 @@ def get_selection():
                                         print(genere_answer)
                                         while True:
                                             final_choice = random.choice(val_new)
-                                            film = search_genre(final_choice, genere_answer)
+                                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                            film = search_genre(final_selection, genere_answer)
+                                            print(film)
                                             if film:
                                                 return final_selection
                                     else:
