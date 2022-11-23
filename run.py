@@ -51,16 +51,24 @@ def clean_file():
 
     # return keys
 
-myDict = {'age': ['12'], 'address': ['34 Main Street, 212 First Avenue'],
-          'firstName': ['Alan', 'Mary-Ann'], 'lastName': ['Stone', 'Lee']}
 
-def search(myDict, lookup):
-    for key, value in myDict.items():
-        for v in value:
-            if lookup in v:
-                return key
+#genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama', 'f': 'Fantasy',
+          #'h': 'Horror', 'k': 'Kids', 'm': 'Mystery', 'r': 'Romance',
+          #'s': 'Sports', 't': 'Thriller'}
 
-search(myDict, 'Mary')
+
+def search_genre(movie, choice):
+    """
+    Get choice import from user
+    """
+    for key, value in movie.items():
+        for choi in value:
+            if choice in choi:
+                return movie
+
+
+#search_genre(genres, 'genre_choice')
+
 
 
 def get_selection():
@@ -106,7 +114,8 @@ def get_selection():
                                         print(genere_answer)
                                         while True:
                                             final_choice = random.choice(val_new)
-                                            if genere_answer in final_choice:
+                                            film = search_genre(final_choice, genere_answer)
+                                            if film:
                                                 return final_selection
                                     else:
                                         print(f'Invalid data: {genere_answer}! Please try again!\n')
