@@ -54,7 +54,7 @@ def clean_file():
 
 def search_genre(movie, choice):
     """
-    Get choice import from user
+    Get genre choice input from user
     """
     for key, value in movie.items():
         #print(movie)
@@ -100,24 +100,32 @@ def get_selection():
                             if 'n' in answer_media_type or 'N' in answer_media_type:
                                 return final_selection
                             elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama', 'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids', 'm': 'Mystery', 'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
+                                genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama',
+                                          'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids',
+                                          'm': 'Mystery', 'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
                                 print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
+                               
                                 genere_answer = input('Enter genre: ')
-                                for key, value in genres.items():
-                                    if key == genere_answer:
-                                        genere_answer = value
-                                        #print(genere_answer)
+                                #genre_key = []
+                                #print(genres.keys())
+                                for k, v in genres.items():
+                                    #genre_key.append(k)
+                                    #print(genre_)                                  
+                                    #if genere_answer in genre_values:
+                                    if k == genere_answer:
+                                        genere_answer = v
+                                        print(genere_answer)
                                         while True:
                                             final_choice = random.choice(val_new)
                                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                                             film = search_genre(final_selection, genere_answer)
                                             #print(film)
-                                            if film:
+                                            if film and 'film' in final_selection:
                                                 return final_selection
                                     else:
+                                    #elif genere_answer not in genres.keys():
                                         print(f'Invalid data: {genere_answer}! Please try again!\n')
                                         break
-                                        
                             else:
                                 print(f'Invalid data: {answer_media_type}! Please try again!\n')
                     # break
@@ -131,7 +139,9 @@ def get_selection():
                             if 'n' in answer_media_type or 'N' in answer_media_type:
                                 return final_selection
                             elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama', 'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids', 'm': 'Mystery', 'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
+                                genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama',
+                                          'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids', 'm': 'Mystery',
+                                          'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
                                 print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
                                 genere_answer = input('Enter genre: ')
                                 for key, value in genres.items():
