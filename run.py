@@ -104,28 +104,26 @@ def get_selection():
                                           'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids',
                                           'm': 'Mystery', 'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
                                 print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
-                               
-                                genere_answer = input('Enter genre: ')
-                                #genre_key = []
-                                #print(genres.keys())
-                                for k, v in genres.items():
-                                    #genre_key.append(k)
-                                    #print(genre_)                                  
-                                    #if genere_answer in genre_values:
-                                    if k == genere_answer:
-                                        genere_answer = v
-                                        print(genere_answer)
-                                        while True:
-                                            final_choice = random.choice(val_new)
-                                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                                            film = search_genre(final_selection, genere_answer)
-                                            #print(film)
-                                            if film and 'film' in final_selection:
-                                                return final_selection
-                                    else:
-                                    #elif genere_answer not in genres.keys():
-                                        print(f'Invalid data: {genere_answer}! Please try again!\n')
-                                        break
+                                while 1:
+                                    try:
+                                        genere_answer = input('Enter genre: ')
+                                        for k, v in genres.items():
+                                            if k == genere_answer:
+                                                genere_answer = v
+                                                print(genere_answer)
+                                                while True:
+                                                    final_choice = random.choice(val_new)
+                                                    final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                                    film = search_genre(final_selection, genere_answer)
+                                                    if film:
+                                                        for k, v in film.items():
+                                                            if 'Film' in v:
+                                                                return final_selection                                        
+                                            elif genere_answer not in genres.keys():
+                                                raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
+                                    except ValueError as value_error:
+                                        print(value_error)
+                                        continue
                             else:
                                 print(f'Invalid data: {answer_media_type}! Please try again!\n')
                     # break
@@ -151,9 +149,10 @@ def get_selection():
                                         while True:
                                             final_choice = random.choice(val_new)
                                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                                            film = search_genre(final_selection, genere_answer)
+                                            film = search_genre(final_selection, genere_answer,)
                                             #print(film)
                                             if film:
+                                                print(film.items())
                                                 return final_selection
                             else:
                                 print(f'Invalid data: {answer_media_type}! Please try again!\n')
