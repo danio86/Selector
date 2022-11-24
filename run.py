@@ -71,7 +71,7 @@ def genre_selection(media_type, genere_answer):
     """
     genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama',
               'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids', 'm': 'Mystery',
-              'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
+              'r': 'Romance', 's': 'Sport', 't': 'Thriller'}
     for k, v in genres.items():
         if k == genere_answer:
             genere_answer = v
