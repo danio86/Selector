@@ -21,6 +21,7 @@ class CleanPrintSelection():
 val_new = []
 keys = []
 final_selection = {}
+genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
 
 
 def clean_file():
@@ -30,6 +31,7 @@ def clean_file():
     file = open('test_film.csv')
     rows = csv.reader(file, delimiter=',')
     watch = []
+
 
     for row in rows:
         watch.append(row)
@@ -62,7 +64,30 @@ def search_genre(movie, choice):
         if choice in value:
             return movie
 
-#search_genre(genres, 'genre_choice')
+
+def genre_selection(media_type, genere_answer):
+    """
+    Get genre and movie/series choice from input from user
+    """
+    genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama',
+              'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids', 'm': 'Mystery',
+              'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
+    for k, v in genres.items():
+        if k == genere_answer:
+            genere_answer = v
+    if media_type == 's' or media_type == 'S':
+        media_type = 'Series'
+    else:
+        media_type = 'Film'
+    while True:
+        final_choice = random.choice(val_new)
+        final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+        film = search_genre(final_selection, genere_answer)
+        if film:
+            for k, v in film.items():
+                if media_type in v:
+                    return final_selection
+
 
 
 
@@ -85,7 +110,7 @@ def get_selection():
                 #print(final_selection)
 
                 return final_selection
-                break
+                #break
             elif pre_choice in pre_choice_inputs:
                 print('How much time you want to spend? \nEnter m for Movie or s for Series.')
                 media_type = input('Enter decision: \n')
@@ -110,7 +135,7 @@ def get_selection():
                                         for k, v in genres.items():
                                             if k == genere_answer:
                                                 genere_answer = v
-                                                print(genere_answer)
+                                                #print(genere_answer)
                                                 while True:
                                                     final_choice = random.choice(val_new)
                                                     final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
@@ -137,26 +162,18 @@ def get_selection():
                             if 'n' in answer_media_type or 'N' in answer_media_type:
                                 return final_selection
                             elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama',
-                                          'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids', 'm': 'Mystery',
-                                          'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
                                 print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
-                                genere_answer = input('Enter genre: ')
-                                for key, value in genres.items():
-                                    if key == genere_answer:
-                                        genere_answer = value
-                                        #print(genere_answer)
-                                        while True:
-                                            final_choice = random.choice(val_new)
-                                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                                            film = search_genre(final_selection, genere_answer,)
-                                            #print(film)
-                                            if film:
-                                                print(film.items())
-                                                return final_selection
-                            else:
-                                print(f'Invalid data: {answer_media_type}! Please try again!\n')
-                    # break
+                                while 1:
+                                    try:
+                                        genere_answer = input('Enter genre: ')
+                                        if genere_answer in genre_lst:
+                                            series = genre_selection(media_type, genere_answer)
+                                            return series
+                                        elif genere_answer not in genre_lst:
+                                            raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
+                                    except ValueError as value_error:
+                                        print(value_error)
+                                        continue
                 else:
                     print(f'Invalid data: {media_type}! Please try again!\n')                 
 
