@@ -22,13 +22,27 @@ class CleanPrintSelection():
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
+topic = []
 
 
-def clean_file():
+def choose_topic():
     """
-    Get choice import from user
+    Get topic choice input from user
     """
-    file = open('imdb.csv')
+    print('What do you need help with? Food or TV?')
+    top = input('Enter f for Food or t for TV: ')
+    if top in ('t', 'T'):
+        top = 'imdb.csv'
+        # print(top, type(top))
+        topic.append(top)
+        # print(topic, topic[0])
+
+
+def clean_file(topic):
+    """
+    Get choice input from user
+    """
+    file = open(topic[0])
     #file = open('test_film.csv')
     rows = csv.reader(file, delimiter=',')
     watch = []
@@ -79,7 +93,7 @@ def genre_selection(media_type, genere_answer):
     else:
         media_type = 'Film'
     while True:
-        final_choice = random.choice(clean_file())
+        final_choice = random.choice(clean_file(topic))
         #final_choice = random.choice(val_new)
         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
         film = search_genre(final_selection, genere_answer)
@@ -105,7 +119,7 @@ def get_selection():
         pre_choice_inputs = ['p', 'P']
         try:
             if pre_choice in random_inputs:
-                final_rand_choice = random.choice(clean_file())
+                final_rand_choice = random.choice(clean_file(topic))
                 #final_rand_choice = random.choice(val_new)
                 final_selection.update({heading: data for heading, data in zip(keys[0], final_rand_choice)})
                 #final_selection.update({heading: data for heading, data in zip(keys, final_rand_choice)})
@@ -118,7 +132,7 @@ def get_selection():
                 media_type = input('Enter decision: \n')
                 if 'm' in media_type or 'M' in media_type:
                     while True:
-                        final_choice = random.choice(clean_file())
+                        final_choice = random.choice(clean_file(topic))
                         #final_choice = random.choice(val_new)
                         if 'Film' in final_choice:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
@@ -144,7 +158,7 @@ def get_selection():
                                 print(f'Invalid data: {answer_media_type}! Please try again!\n')
                 elif 's' in media_type or 'S' in media_type:
                     while True:
-                        final_choice = random.choice(clean_file())
+                        final_choice = random.choice(clean_file(topic))
                         #final_choice = random.choice(val_new)
                         if 'Series' in final_choice:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
@@ -187,7 +201,8 @@ def main():
     """
     run all functions
     """
-    clean_file()
+    choose_topic()
+    clean_file(topic)
     get_selection()
     clean_final_selection = CleanPrintSelection(final_selection)
     print(clean_final_selection)
