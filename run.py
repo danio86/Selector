@@ -18,9 +18,7 @@ class CleanPrintSelection():
         return clean_selection.strip()
 
 
-#value = []
-
-#val_new = []
+# val_new = []
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
@@ -34,17 +32,11 @@ def clean_file():
     #file = open('test_film.csv')
     rows = csv.reader(file, delimiter=',')
     watch = []
-
-
     for row in rows:
         watch.append(row)
-     
-    keys.append(watch[0])
-    #print(keys)
-    values = watch[1:]
-    #value.append(values)
-    #print(value[0])
-    #print(values[0])
+        keys.append(watch[0])
+        values = watch[1:]
+        # value.append(values)
 
     """ for item in values:
         # replace all ',' into ';' inbetween ""
@@ -59,6 +51,7 @@ def clean_file():
 
     # return keys
     return values
+
 
 def search_genre(movie, choice):
     """
@@ -135,34 +128,20 @@ def get_selection():
                             if 'n' in answer_media_type or 'N' in answer_media_type:
                                 return final_selection
                             elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                genres = {'a': 'Action', 'c': 'Comedy', 'd': 'Drama',
-                                          'f': 'Fantasy', 'h': 'Horror', 'k': 'Kids',
-                                          'm': 'Mystery', 'r': 'Romance', 's': 'Sports', 't': 'Thriller'}
                                 print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
                                 while 1:
                                     try:
                                         genere_answer = input('Enter genre: ')
-                                        for k, v in genres.items():
-                                            if k == genere_answer:
-                                                genere_answer = v
-                                                #print(genere_answer)
-                                                while True:
-                                                    final_choice = random.choice(clean_file())
-                                                    #final_choice = random.choice(val_new)
-                                                    final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                                                    film = search_genre(final_selection, genere_answer)
-                                                    if film:
-                                                        for k, v in film.items():
-                                                            if 'Film' in v:
-                                                                return final_selection                                        
-                                            elif genere_answer not in genres.keys():
-                                                raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
+                                        if genere_answer in genre_lst:
+                                            series = genre_selection(media_type, genere_answer)
+                                            return series
+                                        elif genere_answer not in genre_lst:
+                                            raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
                                     except ValueError as value_error:
                                         print(value_error)
                                         continue
                             else:
                                 print(f'Invalid data: {answer_media_type}! Please try again!\n')
-                    # break
                 elif 's' in media_type or 'S' in media_type:
                     while True:
                         final_choice = random.choice(clean_file())
@@ -192,7 +171,7 @@ def get_selection():
             else:
                 raise ValueError(f'Invalid data: {pre_choice}! Please try again!\n')
         except ValueError as value_error:
-            # type_error gets a variable
+            # value_error becommes a variable
             print(value_error)
     return True
 
@@ -214,7 +193,6 @@ def main():
     print(clean_final_selection)
     happy_user = input('New selection? \nEnter y for Yes or n for No: ')
     if happy_user in ('y', 'Y'):
-        # if happy_user == 'y' or happy_user == 'Y':
         main()
     else:
         print('Have a nice evening!\n')
