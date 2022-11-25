@@ -18,7 +18,9 @@ class CleanPrintSelection():
         return clean_selection.strip()
 
 
-val_new = []
+#value = []
+
+#val_new = []
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
@@ -28,7 +30,8 @@ def clean_file():
     """
     Get choice import from user
     """
-    file = open('test_film.csv')
+    file = open('imdb.csv')
+    #file = open('test_film.csv')
     rows = csv.reader(file, delimiter=',')
     watch = []
 
@@ -39,8 +42,11 @@ def clean_file():
     keys.append(watch[0])
     #print(keys)
     values = watch[1:]
+    #value.append(values)
+    #print(value[0])
+    #print(values[0])
 
-    for item in values:
+    """ for item in values:
         # replace all ',' into ';' inbetween ""
         new_str = re.sub(r'"[^"]+"', lambda x: x.group().replace(',', ';'), item[0])
         val = new_str.split(',')
@@ -48,11 +54,11 @@ def clean_file():
         # replaces all ';' into , (after splitting!)
         for dot_comma in val:
             new_val.append(dot_comma.replace(';', ','))
-        val_new.append(new_val)
-    # print(val_new)
+        val_new.append(new_val) """
+    #print(val_new [0])
 
     # return keys
-
+    return values
 
 def search_genre(movie, choice):
     """
@@ -80,7 +86,8 @@ def genre_selection(media_type, genere_answer):
     else:
         media_type = 'Film'
     while True:
-        final_choice = random.choice(val_new)
+        final_choice = random.choice(clean_file())
+        #final_choice = random.choice(val_new)
         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
         film = search_genre(final_selection, genere_answer)
         if film:
@@ -105,8 +112,10 @@ def get_selection():
         pre_choice_inputs = ['p', 'P']
         try:
             if pre_choice in random_inputs:
-                final_rand_choice = random.choice(val_new)
+                final_rand_choice = random.choice(clean_file())
+                #final_rand_choice = random.choice(val_new)
                 final_selection.update({heading: data for heading, data in zip(keys[0], final_rand_choice)})
+                #final_selection.update({heading: data for heading, data in zip(keys, final_rand_choice)})
                 #print(final_selection)
 
                 return final_selection
@@ -116,7 +125,8 @@ def get_selection():
                 media_type = input('Enter decision: \n')
                 if 'm' in media_type or 'M' in media_type:
                     while True:
-                        final_choice = random.choice(val_new)
+                        final_choice = random.choice(clean_file())
+                        #final_choice = random.choice(val_new)
                         if 'Film' in final_choice:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                             print('More selective criteria? \nEnter y for Yes or n for No.\n')
@@ -137,7 +147,8 @@ def get_selection():
                                                 genere_answer = v
                                                 #print(genere_answer)
                                                 while True:
-                                                    final_choice = random.choice(val_new)
+                                                    final_choice = random.choice(clean_file())
+                                                    #final_choice = random.choice(val_new)
                                                     final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                                                     film = search_genre(final_selection, genere_answer)
                                                     if film:
@@ -154,7 +165,8 @@ def get_selection():
                     # break
                 elif 's' in media_type or 'S' in media_type:
                     while True:
-                        final_choice = random.choice(val_new)
+                        final_choice = random.choice(clean_file())
+                        #final_choice = random.choice(val_new)
                         if 'Series' in final_choice:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                             print('More selective criteria? \nEnter y for Yes or n for No.\n')
@@ -198,13 +210,14 @@ def main():
     """
     clean_file()
     get_selection()
+    clean_final_selection = CleanPrintSelection(final_selection)
+    print(clean_final_selection)
+    happy_user = input('New selection? \nEnter y for Yes or n for No: ')
+    if happy_user in ('y', 'Y'):
+        # if happy_user == 'y' or happy_user == 'Y':
+        main()
+    else:
+        print('Have a nice evening!\n')
 
 
 main()
-
-
-# print(final_selection)
-# print(final_selection.items())
-
-clean_final_selection = CleanPrintSelection(final_selection)
-print(clean_final_selection) 
