@@ -31,11 +31,22 @@ def choose_topic():
     """
     print('What do you need help with? Food or TV?')
     top = input('Enter f for Food or t for TV: ')
-    if top in ('t', 'T'):
-        top = 'imdb.csv'
-        # print(top, type(top))
-        topic.append(top)
-        # print(topic, topic[0])
+    while 1:
+        try:
+            if top in ('t', 'T'):
+                top = 'imdb.csv'
+                # print(top, type(top))
+                topic.append(top)
+                # print(topic, topic[0])
+                return topic
+            elif top in ('f', 'F'):
+                topic.append('recipe.csv')
+                return topic
+            else:
+                raise ValueError(f'Invalid data: {top}! Please try again!\n')
+        except ValueError as value_error:
+            print(value_error)
+            continue
 
 
 def clean_file(topic):
@@ -46,24 +57,41 @@ def clean_file(topic):
     #file = open('test_film.csv')
     rows = csv.reader(file, delimiter=',')
     watch = []
-    for row in rows:
-        watch.append(row)
-        keys.append(watch[0])
-        values = watch[1:]
-        # value.append(values)
+    if topic == ['imdb.csv']:
+        for row in rows:
+            watch.append(row)
+            keys.append(watch[0])
+            values = watch[1:]
+            # value.append(values)
+            #print(values)
+    else:
+        for row in rows:
+            watch.append(row[1:4])
+            """ criterion = 1
+            while criterion < 6:
+                # print(row[2])
+                watch.append(row[criterion])
+                criterion += 2
+                print(criterion)
+                print(watch) """
+            print(watch)
+            keys.append(watch[0])
+            values = watch[1:]
+            # value.append(values)
+            #print(values)
 
-    """ for item in values:
-        # replace all ',' into ';' inbetween ""
-        new_str = re.sub(r'"[^"]+"', lambda x: x.group().replace(',', ';'), item[0])
-        val = new_str.split(',')
-        new_val = []
-        # replaces all ';' into , (after splitting!)
-        for dot_comma in val:
-            new_val.append(dot_comma.replace(';', ','))
-        val_new.append(new_val) """
-    #print(val_new [0])
+        """ for item in values:
+            # replace all ',' into ';' inbetween ""
+            new_str = re.sub(r'"[^"]+"', lambda x: x.group().replace(',', ';'), item[0])
+            val = new_str.split(',')
+            new_val = []
+            # replaces all ';' into , (after splitting!)
+            for dot_comma in val:
+                new_val.append(dot_comma.replace(';', ','))
+            val_new.append(new_val) """
+        #print(val_new [0])
 
-    # return keys
+        # return keys
     return values
 
 
