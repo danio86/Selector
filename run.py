@@ -14,7 +14,21 @@ class CleanPrintSelection():
         clean_selection = ''
         
         for key, value in self.selection.items():
-            clean_selection += key + ':' + value + ' '
+            
+            # print(self.selection)
+            if 'Title' in key or 'Ingredients' in key or 'Instructions' in key:
+                if 'Ingredients' in key:
+                    #print(value[0])
+                    value = value[2:-2]
+                    #print(value, type(value))
+                    val = value.replace("'", "")
+                    #print(val)
+                    value = val
+                clean_selection += key + ':\n' + value + ' \n'
+              
+            else:
+                clean_selection += key + ':' + value + ' '
+        #print(clean_selection, type(clean_selection))
         return clean_selection.strip()
 
 
@@ -74,7 +88,7 @@ def clean_file(topic):
                 criterion += 2
                 print(criterion)
                 print(watch) """
-            print(watch)
+            #print(watch)
             keys.append(watch[0])
             values = watch[1:]
             # value.append(values)
@@ -232,6 +246,7 @@ def main():
     choose_topic()
     clean_file(topic)
     get_selection()
+    #print(final_selection.items(1),'test')
     clean_final_selection = CleanPrintSelection(final_selection)
     print(clean_final_selection)
     happy_user = input('New selection? \nEnter y for Yes or n for No: ')
