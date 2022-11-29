@@ -232,11 +232,103 @@ def get_selection():
     return True
 
 
-def pre_selection():
+def get_food_section():
     """
-    run all functions
+    Get food/drink input from user
     """
-    print('Do you want to watch a movie or a series?')
+    while True:
+        print('What do you want to eat/drink? \nEnter r for Random-Choice or p for Pre-Selection.\n')
+
+        pre_choice = input('Enter your choice: \n')
+        # use allways \n in inputs!
+
+        random_inputs = ['r', 'R']
+        pre_choice_inputs = ['p', 'P']
+        try:
+            if pre_choice in random_inputs:
+                final_rand_choice = random.choice(clean_file(topic))
+                final_selection.update({heading: data for heading, data in zip(keys[0], final_rand_choice)})
+                return final_selection
+            elif pre_choice in pre_choice_inputs:
+                print('Do you want to eat or to drink? \nEnter e for Eat or d for Drink. \n')
+                food_type = input('Enter decision: \n')
+                if 'd' in food_type or 'D' in food_type:
+                    while True:
+                        final_choice = random.choice(clean_file(topic))
+                        #final_choice = random.choice(val_new)
+                        print(final_choice[2])
+                        if 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
+                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                            #print(final_selection)
+                            print('\nMore selective criteria? \nEnter y for Yes or n for No.\n')
+                            answer_food_type = input('Enter decision: \n')
+                            #print(answer_media_type)
+                            if 'n' in answer_food_type or 'N' in answer_food_type:
+                                return final_selection
+                            elif 'y' in answer_food_type or 'Y' in answer_food_type:
+                                print('\nAlcohol \nEnter y for Yes or n for No.\n')
+                                while 1:
+                                    try:
+                                        vegy_answer = input('Enter genre: \n')
+                                        if vegy_answer in meat_lst:
+                                            meat_food = genre_selection(food_type, vegy_answer)
+                                            return meat_food
+                                        elif vegy_answer not in meat_lst:
+                                            final_choice = random.choice(clean_file(topic))
+                                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                            vegy = genre_selection(food_type, vegy_answer)
+                                            return vegy
+                                        else:
+                                            raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
+                                    except ValueError as value_error:
+                                        print(value_error)
+                                        continue
+                            else:
+                                print(f'Invalid data: {answer_media_type}! Please try again!\n')
+                elif 'e' in food_type or 'E' in food_type:
+                    while True:
+                        final_choice = random.choice(clean_file(topic))
+                        final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                        print('More selective criteria? \nEnter y for Yes or n for No.\n')
+                        answer_food_type = input('Enter decision: \n')
+                        if 'n' in answer_food_type or 'N' in answer_food_type:
+                            return final_selection
+                        elif 'y' in answer_food_type or 'Y' in answer_food_type:
+                            print('\nAre you vegetarian. \nEnter y for Yes or n for No.\n')
+                            while 1:
+                                try:
+                                    vegy_answer = input('Enter genre: \n')
+                                    if vegy_answer in meat_lst:
+                                        meat_food = genre_selection(food_type, vegy_answer)
+                                        return meat_food
+                                    elif vegy_answer not in meat_lst:
+                                        final_choice = random.choice(clean_file(topic))
+                                        final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                        vegy = genre_selection(food_type, vegy_answer)
+                                        return vegy
+                                    else:
+                                        raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
+                                except ValueError as value_error:
+                                    print(value_error)
+                                    continue
+                        else:
+                            print(f'Invalid data: {vegy_answer}! Please try again!\n')
+                else:
+                    print(f'Invalid data: {food_type}! Please try again!\n')                 
+
+            else:
+                raise ValueError(f'Invalid data: {pre_choice}! Please try again!\n')
+        except ValueError as value_error:
+            # value_error becommes a variable
+            print(value_error)
+    return True
+
+
+#def pre_selection():
+   # """
+    #run all functions
+    #"""
+   # print('Do you want to watch a movie or a series?')
 
 
 def main():
@@ -245,7 +337,10 @@ def main():
     """
     choose_topic()
     clean_file(topic)
-    get_selection()
+    if topic == ['imdb.csv']:
+        get_selection()
+    else:
+        get_food_section()
     #print(final_selection.items(1),'test')
     clean_final_selection = CleanPrintSelection(final_selection)
     print(clean_final_selection)
