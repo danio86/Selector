@@ -36,6 +36,7 @@ class CleanPrintSelection():
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
+alcohol = ['tequila', 'averna', 'rum', 'scotch', 'mezcal', 'gin', 'sherry', 'bourbon', 'wine', 'aperol', 'mezcal']
 topic = []
 
 
@@ -266,14 +267,17 @@ def get_food_section():
                             if 'n' in answer_food_type or 'N' in answer_food_type:
                                 return final_selection
                             elif 'y' in answer_food_type or 'Y' in answer_food_type:
-                                print('\nAlcohol \nEnter y for Yes or n for No.\n')
+                                print('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic.\n')
                                 while 1:
                                     try:
-                                        vegy_answer = input('Enter genre: \n')
-                                        if vegy_answer in meat_lst:
-                                            meat_food = genre_selection(food_type, vegy_answer)
-                                            return meat_food
-                                        elif vegy_answer not in meat_lst:
+                                        alcohol_answer = input('Enter genre: \n')
+                                        if alcohol_answer in ('a', 'A'):
+                                            final_choice_lst = final_choice[1].split()
+                                            #alcohol = ['tequila', 'averna', 'rum', 'scotch', 'mezcal', 'gin', 'sherry', 'bourbon', 'wine', 'aperol', 'mezcal']
+                                            for alc in final_choice_lst:
+                                                if alc.lower() in alcohol:
+                                                    return final_selection
+                                        elif alcohol_answer in ('n', 'N'):
                                             final_choice = random.choice(clean_file(topic))
                                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                                             vegy = genre_selection(food_type, vegy_answer)
