@@ -322,8 +322,13 @@ def get_food_section():
                                 try:
                                     # vegy_answer = input('Enter genre: \n')
                                     if vegy_answer in ('m', 'M'):
-                                        meat_food = genre_selection(food_type, vegy_answer)
-                                        return meat_food
+                                        final_choice_lst = final_choice[1].split()
+                                            #alcohol = ['tequila', 'averna', 'rum', 'scotch', 'mezcal', 'gin', 'sherry', 'bourbon', 'wine', 'aperol', 'mezcal']
+                                            for meat in final_choice_lst:
+                                                meat = re.sub(r'[^A-Za-z]', '', alc)
+                                                # print(alc)
+                                                if meat.lower() in alcohol:
+                                                    return final_selection
                                     elif vegy_answer not in meat_lst:
                                         final_choice = random.choice(clean_file(topic))
                                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
