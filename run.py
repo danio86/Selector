@@ -37,7 +37,7 @@ keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
 drinks = []
-alcohol = ['tequila', 'averna', 'rum', 'scotch', 'mezcal', 'gin', 'sherry', 'bourbon', 'wine', 'aperol', 'mezcal']
+alcohol = ['tequila', 'averna', 'rum', 'scotch', 'mezcal', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
 
@@ -285,6 +285,7 @@ def get_food_section():
                                 alcohol_answer = input('Enter answer: \n')
                                 while 1:
                                     try:
+                                        non_alc = True
                                         final_choice = random.choice(clean_file(topic))
                                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                                         if alcohol_answer in ('a', 'A'):
@@ -307,14 +308,14 @@ def get_food_section():
                                                         for item in alc_ingr:
                                                             no_alc.append(alc)
                                                             non_alc = any(item in no_alc for item in alcohol)
-                                                            if non_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
-                                                                return final_selection
+                                                        if non_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
+                                                            return final_selection
                                                 for alc in final_choice_lst:
                                                     alc = re.sub(r'[^A-Za-z]', '', alc)
                                                     no_alc.append(alc)
                                                     non_alc = any(item in no_alc for item in alcohol)
-                                                    if non_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
-                                                        return final_selection
+                                                if non_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
+                                                    return final_selection
                                         else:
                                             raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
                                     except ValueError as value_error:
