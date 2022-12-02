@@ -180,7 +180,6 @@ def less_time(food_type):
             #min = minute.replace(" ", "")
         minutes.append(int(minute))
     final_time = sum(minutes)
-    print(final_time)
     if final_time < 30:
         final_choice_lst = final_choice[1].split()
         for meat in final_choice_lst:                                         
