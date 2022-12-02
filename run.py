@@ -165,19 +165,32 @@ def less_time(food_type):
    Get lenn than 30min time input from user
    """
    while 1:
+    minutes = []
     final_choice = random.choice(clean_file(topic))
     final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
     preparation = final_choice[2]
-    quick_cooking_pos = preparation.find('minutes')
-    minute = preparation[quick_cooking_pos-3:quick_cooking_pos-1]
-    final_choice_lst = final_choice[1].split()
-    for meat in final_choice_lst:                                         
-        meat = re.sub(r'[^A-Za-z]', '', meat)
-        if food_type in ('v', 'V'):
-            return final_selection
-
-
-
+    #m_pos = 0
+    #for min_pos in preparation:
+    min_pos = [time for time in range(len(preparation)) if preparation.startswith('minutes', time)]     
+        #min_pos = preparation[m_pos:].find('minutes')
+        #m_pos += min_pos+8
+    #print(min_pos)
+    for time in min_pos:
+        minute = preparation[time-3:time-1].replace(" ", "")
+            #min = minute.replace(" ", "")
+        minutes.append(int(minute))
+    final_time = sum(minutes)
+    print(final_time)
+    if final_time < 30:
+        final_choice_lst = final_choice[1].split()
+        for meat in final_choice_lst:                                         
+            meat = re.sub(r'[^A-Za-z]', '', meat)
+            if food_type in ('v', 'V'):
+                if meat.lower() not in meat_lst and 'drink' not in preparation and 'punch' not in preparation:
+                    return final_selection
+            else:
+                if meat.lower() in meat_lst and 'drink' not in preparation and 'punch' not in preparation:
+                    return final_selection
 
 
 def get_selection():
@@ -351,7 +364,20 @@ def get_food_section():
                                         for meat in final_choice_lst:
                                             meat = re.sub(r'[^A-Za-z]', '', meat)
                                             if meat.lower() in meat_lst:
-                                                return final_selection
+                                                print("\nHow much time you want to spend?\nEnter i for I don't care or l for less than 30 Minutes.")
+                                                try:
+                                                    answer_time = input('Enter answer: \n')
+                                                    if answer_time in ('i', 'I'):
+                                                        return final_selection
+                                                    elif answer_time in ('l', 'L'):
+                                                        time = less_time('v')
+                                                        return time
+                                                    else:
+                                                        raise ValueError(f'Invalid data: {answer_time}! Please try again!\n')
+                                                except ValueError as value_error:
+                                                    print(value_error)
+                                                    print("\nHow much time you want to spend?\nEnter i for I don't care or l for less than 30 Minutes.")
+                                                    continue
                                     elif vegy_answer in ('v', 'V'):
                                         final_choice_lst = final_choice[1].split()
                                         for meat in final_choice_lst:                                         
