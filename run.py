@@ -37,7 +37,7 @@ keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
 drinks = []
-alcohol = ['tequila', 'averna', 'rum', 'scotch', 'mezcal', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka']
+alcohol = ['tequila', 'averna', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
 
@@ -272,7 +272,7 @@ def get_food_section():
                         final_choice = random.choice(clean_file(topic))
                         #final_choice = random.choice(val_new)
                         #print(final_choice[2])
-                        if 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
+                        if 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                             #print(final_selection)
                             print('\nMore selective criteria? \nEnter y for Yes or n for No.\n')
@@ -285,46 +285,34 @@ def get_food_section():
                                 alcohol_answer = input('Enter answer: \n')
                                 while 1:
                                     try:
-                                        non_alc = True
+                                        alc_lst = []
                                         final_choice = random.choice(clean_file(topic))
                                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                                         if alcohol_answer in ('a', 'A'):
                                             final_choice_lst = final_choice[1].split()
                                             for alc in final_choice_lst:
                                                 alc = re.sub(r'[^A-Za-z]', '', alc)
-                                                for alc_ingr in alc:
-                                                    alc_ingr.split()
-                                                    if alc_ingr.lower() in alcohol and 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
-                                                        return final_selection
-                                        elif alcohol_answer in ('n', 'N'):
-                                            no_alc = []
-                                            final_choice_lst = final_choice[1].split()
-                                            for alc in final_choice_lst:
-                                                alc = re.sub(r'[^A-Za-z]', '', alc)
-                                                for alc_ingr in alc:
-                                                    if "' '" in alc:
-                                                        alc_ingr = alc.split()
-                                                        # print(alc_ingr)
-                                                        for item in alc_ingr:
-                                                            no_alc.append(alc)
-                                                            non_alc = any(item in no_alc for item in alcohol)
-                                                        if non_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
-                                                            return final_selection
-                                                for alc in final_choice_lst:
-                                                    alc = re.sub(r'[^A-Za-z]', '', alc)
-                                                    no_alc.append(alc)
-                                                    non_alc = any(item in no_alc for item in alcohol)
-                                                if non_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2]:
+                                                if alc.lower() in alcohol and 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
                                                     return final_selection
+                                        elif alcohol_answer in ('n', 'N'):
+                                            no_alc = True
+                                            final_choice_lst = final_choice[1].split()
+                                            for alc in final_choice_lst:                                         
+                                                alc = re.sub(r'[^A-Za-z]', '', alc)
+                                                alc_lst.append(alc.lower())
+                                                no_alc = any(x in alc_lst for x in alcohol)
+                        
+                                            if no_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
+                                                return final_selection
                                         else:
-                                            raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
+                                            raise ValueError(f'Invalid data: {alcohol_answer}! Please try again!\n')
                                     except ValueError as value_error:
                                         print(value_error)
-                                        print('\nAre you vegetarian. \nEnter v for I am vegy or m for I want meat.\n')
+                                        print('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic.\n')
                                         vegy_answer = input('\nEnter your answer: \n')
                                         continue
                             else:
-                                print(f'Invalid data: {answer_media_type}! Please try again!\n')
+                                print(f'Invalid data: {answer_food_type}! Please try again!\n')
                 elif 'e' in food_type or 'E' in food_type:
                     while True:
                         final_choice = random.choice(clean_file(topic))
@@ -360,7 +348,7 @@ def get_food_section():
                                     vegy_answer = input('\nEnter your answer: \n')
                                     continue
                         else:
-                            print(f'Invalid data: {vegy_answer}! Please try again!\n')
+                            print(f'Invalid data: {answer_food_type}! Please try again!\n')
                 else:
                     print(f'Invalid data: {food_type}! Please try again!\n')
 
