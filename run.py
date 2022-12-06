@@ -346,17 +346,17 @@ def get_food_section():
                                         if alcohol_answer in ('a', 'A'):
                                             #final_choice_lst = final_choice[1].split()
                                             #for alc in final_choice_lst:
-                                                #alc = re.sub(r'[^A-Za-z]', '', alc)
+                                            #alc = re.sub(r'[^A-Za-z]', '', alc)
                                             if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
                                                 return final_selection
                                         elif alcohol_answer in ('n', 'N'):
                                             no_alc = True
                                             #final_choice_lst = final_choice[1].split()
                                             #for alc in final_choice_lst:                                         
-                                                #alc = re.sub(r'[^A-Za-z]', '', alc)
+                                            #alc = re.sub(r'[^A-Za-z]', '', alc)
                                             alc_lst.append(alc.lower())
                                             no_alc = any(same in alc_lst for same in alcohol)
-                                            
+                                            no_go_alc_words = any(no_go in no_go_words for no_go in final_choice[2])
                                             if no_alc == False and 'Drink' in final_choice[2] or no_alc == False and 'drink' in final_choice[2]:
                                                 return final_selection
                                             #else:
