@@ -38,6 +38,7 @@ keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
 drinks = []
+no_go_words = ['pizza', 'grilled']
 alcohol = ['tequila', 'averna', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
@@ -355,6 +356,7 @@ def get_food_section():
                                                 #alc = re.sub(r'[^A-Za-z]', '', alc)
                                             alc_lst.append(alc.lower())
                                             no_alc = any(same in alc_lst for same in alcohol)
+                                            
                                             if no_alc == False and 'Drink' in final_choice[2] or no_alc == False and 'drink' in final_choice[2]:
                                                 return final_selection
                                             #else:
