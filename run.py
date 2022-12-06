@@ -97,7 +97,12 @@ def clean_file(topic):
                 print(watch) """
             #print(watch)
             keys.append(watch[0])
-            values = watch[1:]            
+            values = watch[1:] 
+            for val in  values:
+                if 'drinks' in val[2] or 'Drinks' in val[2] or 'punch' val[2]:
+                    with open('drinks.csv', mode='w')
+                    writer = csv.StrWriter()
+                    print(val[2])           
             # value.append(values)
             #print(values)
             """ drink = values[2]
