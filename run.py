@@ -296,7 +296,7 @@ def get_food_section():
     Get food/drink input from user
     """
     while True:
-        pre_choice = input('\nWhat do you want to eat or drink? \nEnter r for Random-Choice or p for Pre-Selection: ')
+        pre_choice = input('\nWhat do you want to eat or to drink? \nEnter r for Random-Choice or p for Pre-Selection: ')
 
         #pre_choice = input('Enter your choice: \n')
         # use allways \n in inputs!
@@ -313,17 +313,24 @@ def get_food_section():
                 #food_type = input('Enter decision: \n')
                 while True:
                     if 'd' in food_type or 'D' in food_type:
+                        #answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                        #if 'n' in answer_food_type or 'N' in answer_food_type:
                         final_choice = random.choice(clean_file(topic))
-                        #final_choice = random.choice(val_new)
-                        #print(final_choice[2])
                         if 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                            #print(final_selection)
                             answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
-                            #answer_food_type = input('Enter decision: \n')
-                            #print(answer_media_type)
                             if 'n' in answer_food_type or 'N' in answer_food_type:
                                 return final_selection
+                        #final_choice = random.choice(val_new)
+                        #print(final_choice[2])
+                        #if 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
+                            #final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                            #print(final_selection)
+                            #answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                            #answer_food_type = input('Enter decision: \n')
+                            #print(answer_media_type)
+                            #if 'n' in answer_food_type or 'N' in answer_food_type:
+                                #return final_selection
                             elif 'y' in answer_food_type or 'Y' in answer_food_type:
                                 alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: ')
                                 #alcohol_answer = input('Enter answer: \n')
@@ -332,28 +339,31 @@ def get_food_section():
                                         alc_lst = []
                                         final_choice = random.choice(clean_file(topic))
                                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                        final_choice_lst = final_choice[1].split()
+                                        for alc in final_choice_lst:
+                                            alc = re.sub(r'[^A-Za-z]', '', alc)
                                         if alcohol_answer in ('a', 'A'):
-                                            final_choice_lst = final_choice[1].split()
-                                            for alc in final_choice_lst:
-                                                alc = re.sub(r'[^A-Za-z]', '', alc)
-                                                if alc.lower() in alcohol and 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
-                                                    return final_selection
+                                            #final_choice_lst = final_choice[1].split()
+                                            #for alc in final_choice_lst:
+                                                #alc = re.sub(r'[^A-Za-z]', '', alc)
+                                            if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
+                                                return final_selection
                                         elif alcohol_answer in ('n', 'N'):
                                             no_alc = True
-                                            final_choice_lst = final_choice[1].split()
-                                            for alc in final_choice_lst:                                         
-                                                alc = re.sub(r'[^A-Za-z]', '', alc)
-                                                alc_lst.append(alc.lower())
-                                                no_alc = any(same in alc_lst for same in alcohol)
-                        
+                                            #final_choice_lst = final_choice[1].split()
+                                            #for alc in final_choice_lst:                                         
+                                                #alc = re.sub(r'[^A-Za-z]', '', alc)
+                                            alc_lst.append(alc.lower())
+                                            no_alc = any(same in alc_lst for same in alcohol)
                                             if no_alc == False and 'Drink' in final_choice[2] or no_alc == False and 'drink' in final_choice[2]:
                                                 return final_selection
+                                            #else:
+                                                #raise ValueError(f'Invalid data: {alcohol_answer}! Please try again!\n')
                                         else:
                                             raise ValueError(f'Invalid data: {alcohol_answer}! Please try again!\n')
                                     except ValueError as value_error:
                                         print(value_error)
-                                        print('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic.\n')
-                                        vegy_answer = input('\nEnter your answer: \n')
+                                        alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: ')
                                         continue
                             else:
                                 print(f'Invalid data: {answer_food_type}! Please try again!\n')
