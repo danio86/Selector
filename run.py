@@ -38,7 +38,7 @@ keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
 drinks = []
-alcohol = ['tequila', 'averna', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka']
+alcohol = ['tequila', 'averna', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
 
@@ -48,9 +48,11 @@ def choose_topic():
     Get topic choice input from user
     """
     print('\nWhat do you need help with? Food or TV?')
-    top = input('Enter f for Food or t for TV: ')
+    #top = input('Enter f for Food or t for TV: ')
     while 1:
         try:
+            topic.clear()
+            top = input('Enter f for Food or t for TV: ')
             if top in ('t', 'T'):
                 top = 'imdb.csv'
                 # print(top, type(top))
@@ -220,58 +222,67 @@ def get_selection():
             elif pre_choice in pre_choice_inputs:
                 media_type = input('\nHow much time you want to spend? \nEnter m for Movie or s for Series: ')
                 #media_type = input('Enter decision: ')
-                if 'm' in media_type or 'M' in media_type:
-                    while True:
-                        final_choice = random.choice(clean_file(topic))
-                        #final_choice = random.choice(val_new)
-                        if 'Film' in final_choice:
-                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                            answer_media_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
-                            #answer_media_type = input('Enter decision: ')
-                            #print(answer_media_type)
-                            if 'n' in answer_media_type or 'N' in answer_media_type:
-                                return final_selection
-                            elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                print('\nSelect a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
-                                while 1:
-                                    try:
-                                        genere_answer = input('Enter Genre: ')
-                                        if genere_answer in genre_lst:
-                                            series = genre_selection(media_type, genere_answer)
-                                            return series
-                                        elif genere_answer not in genre_lst:
-                                            raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
-                                    except ValueError as value_error:
-                                        print(value_error)
-                                        continue
-                            else:
-                                print(f'Invalid data: {answer_media_type}! Please try again!\n')
-                elif 's' in media_type or 'S' in media_type:
-                    while True:
-                        final_choice = random.choice(clean_file(topic))
-                        #final_choice = random.choice(val_new)
-                        if 'Series' in final_choice:
-                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                            answer_media_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
-                            #answer_media_type = input('Enter decision: \n')
-                            if 'n' in answer_media_type or 'N' in answer_media_type:
-                                return final_selection
-                            elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                print('\nSelect a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
-                                while 1:
-                                    try:
-                                        genere_answer = input('Enter genre: ')
-                                        if genere_answer in genre_lst:
-                                            series = genre_selection(media_type, genere_answer)
-                                            return series
-                                        elif genere_answer not in genre_lst:
-                                            raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
-                                    except ValueError as value_error:
-                                        print(value_error)
-                                        continue
-                else:
-                    print(f'Invalid data: {media_type}! Please try again!\n')                 
-
+                while 1:
+                    try:
+                        if 'm' in media_type or 'M' in media_type:
+                            while True:
+                                final_choice = random.choice(clean_file(topic))
+                                #final_choice = random.choice(val_new)
+                                if 'Film' in final_choice:
+                                    final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                    answer_media_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                                    #answer_media_type = input('Enter decision: ')
+                                    #print(answer_media_type)
+                                    if 'n' in answer_media_type or 'N' in answer_media_type:
+                                        return final_selection
+                                    elif 'y' in answer_media_type or 'Y' in answer_media_type:
+                                        print('\nSelect a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
+                                        while 1:
+                                            try:
+                                                genere_answer = input('Enter Genre: ')
+                                                #genere_answer = genere_answer.lower()
+                                                if genere_answer.lower() in genre_lst:
+                                                    series = genre_selection(media_type, genere_answer.lower())
+                                                    return series
+                                                elif genere_answer not in genre_lst:
+                                                    raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
+                                            except ValueError as value_error:
+                                                print(value_error)
+                                                continue
+                                    else:
+                                        print(f'Invalid data: {answer_media_type}! Please try again!\n')
+                        elif 's' in media_type or 'S' in media_type:
+                            while True:
+                                final_choice = random.choice(clean_file(topic))
+                                #final_choice = random.choice(val_new)
+                                if 'Series' in final_choice:
+                                    final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                    answer_media_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                                    #answer_media_type = input('Enter decision: \n')
+                                    if 'n' in answer_media_type or 'N' in answer_media_type:
+                                        return final_selection
+                                    elif 'y' in answer_media_type or 'Y' in answer_media_type:
+                                        print('\nSelect a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
+                                        while 1:
+                                            try:
+                                                genere_answer = input('Enter genre: ')
+                                                if genere_answer.lower() in genre_lst:
+                                                    series = genre_selection(media_type, genere_answer.lower())
+                                                    return series
+                                                elif genere_answer not in genre_lst:
+                                                    raise ValueError(f'Invalid data: {genere_answer}! Please try again!\n')
+                                            except ValueError as value_error:
+                                                print(value_error)
+                                                continue
+                                    else:
+                                        print(f'Invalid data: {answer_media_type}! Please try again!\n')
+                        else:
+                            raise ValueError(f'Invalid data: {media_type}! Please try again!\n')
+                            #print(f'Invalid data: {media_type}! Please try again!\n')                 
+                    except ValueError as value_error:
+                        print(value_error)
+                        media_type = input('\nHow much time you want to spend? \nEnter m for Movie or s for Series: ')
+                        continue
             else:
                 raise ValueError(f'Invalid data: {pre_choice}! Please try again!\n')
         except ValueError as value_error:
@@ -300,22 +311,22 @@ def get_food_section():
             elif pre_choice in pre_choice_inputs:
                 food_type = input('\nDo you want to eat or to drink? \nEnter e for Eat or d for Drink: ')
                 #food_type = input('Enter decision: \n')
-                if 'd' in food_type or 'D' in food_type:
-                    while True:
+                while True:
+                    if 'd' in food_type or 'D' in food_type:
                         final_choice = random.choice(clean_file(topic))
                         #final_choice = random.choice(val_new)
                         #print(final_choice[2])
                         if 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                             #print(final_selection)
-                            print('\nMore selective criteria? \nEnter y for Yes or n for No.\n')
-                            answer_food_type = input('Enter decision: \n')
+                            answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                            #answer_food_type = input('Enter decision: \n')
                             #print(answer_media_type)
                             if 'n' in answer_food_type or 'N' in answer_food_type:
                                 return final_selection
                             elif 'y' in answer_food_type or 'Y' in answer_food_type:
-                                print('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic.\n')
-                                alcohol_answer = input('Enter answer: \n')
+                                alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: ')
+                                #alcohol_answer = input('Enter answer: \n')
                                 while 1:
                                     try:
                                         alc_lst = []
@@ -333,9 +344,9 @@ def get_food_section():
                                             for alc in final_choice_lst:                                         
                                                 alc = re.sub(r'[^A-Za-z]', '', alc)
                                                 alc_lst.append(alc.lower())
-                                                no_alc = any(x in alc_lst for x in alcohol)
+                                                no_alc = any(same in alc_lst for same in alcohol)
                         
-                                            if no_alc == False and 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
+                                            if no_alc == False and 'Drink' in final_choice[2] or no_alc == False and 'drink' in final_choice[2]:
                                                 return final_selection
                                         else:
                                             raise ValueError(f'Invalid data: {alcohol_answer}! Please try again!\n')
@@ -346,8 +357,8 @@ def get_food_section():
                                         continue
                             else:
                                 print(f'Invalid data: {answer_food_type}! Please try again!\n')
-                elif 'e' in food_type or 'E' in food_type:
-                    while True:
+                    elif 'e' in food_type or 'E' in food_type:
+                    
                         final_choice = random.choice(clean_file(topic))
                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                         answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
@@ -378,7 +389,7 @@ def get_food_section():
                                                         raise ValueError(f'Invalid data: {answer_time}! Please try again!\n')
                                                 except ValueError as value_error:
                                                     print(value_error)
-                                                    print("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
+                                                    #print("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
                                                     continue
                                     elif vegy_answer in ('v', 'V'):
                                         final_choice_lst = final_choice[1].split()
@@ -397,7 +408,7 @@ def get_food_section():
                                                         raise ValueError(f'Invalid data: {answer_time}! Please try again!\n')
                                                 except ValueError as value_error:
                                                     print(value_error)
-                                                    print("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
+                                                    #print("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
                                                     continue
                                     else:
                                         raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
@@ -408,8 +419,9 @@ def get_food_section():
                                     continue
                         else:
                             print(f'Invalid data: {answer_food_type}! Please try again!\n')
-                else:
-                    print(f'Invalid data: {food_type}! Please try again!\n')
+                    else:
+                        print(f'Invalid data: {food_type}! Please try again!\n')
+                        food_type = input('\nDo you want to eat or to drink? \nEnter e for Eat or d for Drink: ')
 
             else:
                 raise ValueError(f'Invalid data: {pre_choice}! Please try again!\n')
