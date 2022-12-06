@@ -11,7 +11,8 @@ class CleanPrintSelection():
         self.selection = selection
 
     def __str__(self, ):
-        clean_selection = ''
+        clean_selection = ' \n'
+        print('')
         
         for key, value in self.selection.items():
             
@@ -24,10 +25,10 @@ class CleanPrintSelection():
                     val = value.replace("'", "")
                     #print(val)
                     value = val
-                clean_selection += key + ':\n' + value + ' \n'
+                clean_selection += '\n' + key + ':\n' + value + ' \n'
               
             else:
-                clean_selection += key + ':' + value + ' '
+                clean_selection += '\n' + key + ': ' + value + ' '
         #print(clean_selection, type(clean_selection))
         return clean_selection.strip()
 
@@ -46,7 +47,7 @@ def choose_topic():
     """
     Get topic choice input from user
     """
-    print('What do you need help with? Food or TV?')
+    print('\nWhat do you need help with? Food or TV?')
     top = input('Enter f for Food or t for TV: ')
     while 1:
         try:
@@ -162,7 +163,7 @@ def genre_selection(media_type, genere_answer):
 
 def less_time(food_type):
    """
-   Get lenn than 30min time input from user
+   Get less than 30min time input from user
    """
    while 1:
     minutes = []
@@ -171,16 +172,18 @@ def less_time(food_type):
     preparation = final_choice[2]
     #m_pos = 0
     #for min_pos in preparation:
-    min_pos = [time for time in range(len(preparation)) if preparation.startswith('minutes', time)]     
+    min_pos = [time for time in range(len(preparation)) if preparation.startswith('minutes', time)]
         #min_pos = preparation[m_pos:].find('minutes')
         #m_pos += min_pos+8
     #print(min_pos)
     for time in min_pos:
-        minute = preparation[time-3:time-1].replace(" ", "")
+        minute = preparation[time-3:time-1]
+        minute = re.sub('\D', '', minute)
+        #minute = preparation[time-3:time-1].replace(" ", "")
             #min = minute.replace(" ", "")
         minutes.append(int(minute))
     final_time = sum(minutes)
-    if final_time < 30:
+    if final_time < 30 and 'hour' not in final_choice[2]:
         final_choice_lst = final_choice[1].split()
         for meat in final_choice_lst:                                         
             meat = re.sub(r'[^A-Za-z]', '', meat)
@@ -197,9 +200,9 @@ def get_selection():
     Get choice import from user
     """
     while True:
-        print('What do you want to watch? \nEnter r for Random-Choice or p for Pre-Selection.')
+        pre_choice = input('\nWhat do you want to watch? \nEnter r for Random-Choice or p for Pre-Selection: ')
 
-        pre_choice = input('Enter your choice: \n')
+        #pre_choice = input('Enter your choice: ')
         # use allways \n in inputs!
 
         random_inputs = ['r', 'R']
@@ -215,24 +218,24 @@ def get_selection():
                 return final_selection
                 #break
             elif pre_choice in pre_choice_inputs:
-                print('How much time you want to spend? \nEnter m for Movie or s for Series.')
-                media_type = input('Enter decision: \n')
+                media_type = input('\nHow much time you want to spend? \nEnter m for Movie or s for Series: ')
+                #media_type = input('Enter decision: ')
                 if 'm' in media_type or 'M' in media_type:
                     while True:
                         final_choice = random.choice(clean_file(topic))
                         #final_choice = random.choice(val_new)
                         if 'Film' in final_choice:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                            print('More selective criteria? \nEnter y for Yes or n for No.\n')
-                            answer_media_type = input('Enter decision: \n')
-                            print(answer_media_type)
+                            answer_media_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                            #answer_media_type = input('Enter decision: ')
+                            #print(answer_media_type)
                             if 'n' in answer_media_type or 'N' in answer_media_type:
                                 return final_selection
                             elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
+                                print('\nSelect a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
                                 while 1:
                                     try:
-                                        genere_answer = input('Enter genre: ')
+                                        genere_answer = input('Enter Genre: ')
                                         if genere_answer in genre_lst:
                                             series = genre_selection(media_type, genere_answer)
                                             return series
@@ -249,12 +252,12 @@ def get_selection():
                         #final_choice = random.choice(val_new)
                         if 'Series' in final_choice:
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                            print('More selective criteria? \nEnter y for Yes or n for No.\n')
-                            answer_media_type = input('Enter decision: \n')
+                            answer_media_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                            #answer_media_type = input('Enter decision: \n')
                             if 'n' in answer_media_type or 'N' in answer_media_type:
                                 return final_selection
                             elif 'y' in answer_media_type or 'Y' in answer_media_type:
-                                print('Select a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
+                                print('\nSelect a genre. \nEnter a for Action, c for Comedy, d for Drama, \nf for fantasy, h for Horror, k for Kids, \nm for Mystery, r for Romance, s for Sports \nor t for Thriller')
                                 while 1:
                                     try:
                                         genere_answer = input('Enter genre: ')
@@ -282,9 +285,9 @@ def get_food_section():
     Get food/drink input from user
     """
     while True:
-        print('What do you want to eat/drink? \nEnter r for Random-Choice or p for Pre-Selection.\n')
+        pre_choice = input('\nWhat do you want to eat or drink? \nEnter r for Random-Choice or p for Pre-Selection: ')
 
-        pre_choice = input('Enter your choice: \n')
+        #pre_choice = input('Enter your choice: \n')
         # use allways \n in inputs!
 
         random_inputs = ['r', 'R']
@@ -295,8 +298,8 @@ def get_food_section():
                 final_selection.update({heading: data for heading, data in zip(keys[0], final_rand_choice)})
                 return final_selection
             elif pre_choice in pre_choice_inputs:
-                print('Do you want to eat or to drink? \nEnter e for Eat or d for Drink. \n')
-                food_type = input('Enter decision: \n')
+                food_type = input('\nDo you want to eat or to drink? \nEnter e for Eat or d for Drink: ')
+                #food_type = input('Enter decision: \n')
                 if 'd' in food_type or 'D' in food_type:
                     while True:
                         final_choice = random.choice(clean_file(topic))
@@ -347,13 +350,13 @@ def get_food_section():
                     while True:
                         final_choice = random.choice(clean_file(topic))
                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                        print('More selective criteria? \nEnter y for Yes or n for No.\n')
-                        answer_food_type = input('Enter decision: \n')
+                        answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: ')
+                        #answer_food_type = input('Enter decision: \n')
                         if 'n' in answer_food_type or 'N' in answer_food_type:
                             return final_selection
                         elif 'y' in answer_food_type or 'Y' in answer_food_type:
-                            print('\nAre you vegetarian. \nEnter v for I am vegy or m for I want meat.\n')
-                            vegy_answer = input('\nEnter your answer: \n')
+                            vegy_answer = input('\nAre you vegetarian? \nEnter v for I am Vegy or m for I want Meat: ')
+                            #vegy_answer = input('\nEnter your answer: \n')
                             while 1:
                                 try:
                                     final_choice = random.choice(clean_file(topic))
@@ -363,9 +366,9 @@ def get_food_section():
                                         for meat in final_choice_lst:
                                             meat = re.sub(r'[^A-Za-z]', '', meat)
                                             if meat.lower() in meat_lst:
-                                                print("\nHow much time you want to spend?\nEnter i for I don't care or l for less than 30 Minutes.")
+                                                #print("\nHow much time you want to spend?\nEnter i for I don't care or l for less than 30 Minutes.")
                                                 try:
-                                                    answer_time = input('Enter answer: \n')
+                                                    answer_time = input("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
                                                     if answer_time in ('i', 'I'):
                                                         return final_selection
                                                     elif answer_time in ('l', 'L'):
@@ -375,16 +378,16 @@ def get_food_section():
                                                         raise ValueError(f'Invalid data: {answer_time}! Please try again!\n')
                                                 except ValueError as value_error:
                                                     print(value_error)
-                                                    print("\nHow much time you want to spend?\nEnter i for I don't care or l for less than 30 Minutes.")
+                                                    print("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
                                                     continue
                                     elif vegy_answer in ('v', 'V'):
                                         final_choice_lst = final_choice[1].split()
                                         for meat in final_choice_lst:                                         
                                             meat = re.sub(r'[^A-Za-z]', '', meat)
                                             if meat.lower() not in meat_lst:
-                                                print("\nHow much time you want to spend?\nEnter i for I don't care or l for less than 30 Minutes.")
+                                                #print("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes.")
                                                 try:
-                                                    answer_time = input('Enter answer: \n')
+                                                    answer_time = input("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
                                                     if answer_time in ('i', 'I'):
                                                         return final_selection
                                                     elif answer_time in ('l', 'L'):
@@ -394,14 +397,14 @@ def get_food_section():
                                                         raise ValueError(f'Invalid data: {answer_time}! Please try again!\n')
                                                 except ValueError as value_error:
                                                     print(value_error)
-                                                    print("\nHow much time you want to spend?\nEnter i for I don't care or l for less than 30 Minutes.")
+                                                    print("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: ")
                                                     continue
                                     else:
                                         raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
                                 except ValueError as value_error:
                                     print(value_error)
-                                    print('\nAre you vegetarian. \nEnter v for I am vegy or m for I want meat.\n')
-                                    vegy_answer = input('\nEnter your answer: \n')
+                                    #print('\nAre you vegetarian? \nEnter v for I am vegy or m for I want meat: ')
+                                    vegy_answer = input('\nAre you vegetarian? \nEnter v for I am vegy or m for I want meat: ')
                                     continue
                         else:
                             print(f'Invalid data: {answer_food_type}! Please try again!\n')
@@ -436,11 +439,11 @@ def main():
     #print(final_selection.items(1),'test')
     clean_final_selection = CleanPrintSelection(final_selection)
     print(clean_final_selection)
-    happy_user = input('New selection? \nEnter y for Yes or n for No: ')
-    if happy_user in ('y', 'Y'):
+    happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: ')
+    if happy_user in ('n', 'N'):
         main()
     else:
-        print('Have a nice evening!\n')
+        print('\nHave a good time!\n')
 
 
 main()
