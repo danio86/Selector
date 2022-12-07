@@ -37,9 +37,9 @@ class CleanPrintSelection():
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
-drinks = []
-no_go_words = ['pizza', 'grilled']
-alcohol = ['tequila', 'averna', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne']
+#drinks = []
+no_go_words = ['Carrots', 'Sorbet', 'grilled', 'Cupcake', 'Shoulder', 'Grilled', 'Pizza', 'Cookies']
+alcohol = ['tequila', 'averna', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
 
@@ -98,11 +98,11 @@ def clean_file(topic):
             #print(watch)
             keys.append(watch[0])
             values = watch[1:] 
-            for val in  values:
+            """ for val in  values:
                 if 'drinks' in val[2] or 'Drinks' in val[2] or 'punch' val[2]:
                     with open('drinks.csv', mode='w')
                     writer = csv.StrWriter()
-                    print(val[2])           
+                    print(val[2])  """          
             # value.append(values)
             #print(values)
             """ drink = values[2]
@@ -346,24 +346,32 @@ def get_food_section():
                                         final_choice = random.choice(clean_file(topic))
                                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                                         final_choice_lst = final_choice[1].split()
-                                        for alc in final_choice_lst:
-                                            alc = re.sub(r'[^A-Za-z]', '', alc)
+                                        #for alc in final_choice_lst:
+                                            #alc = re.sub(r'[^A-Za-z]', '', alc)
                                         if alcohol_answer in ('a', 'A'):
+                                            for alc in final_choice_lst:
+                                                alc = re.sub(r'[^A-Za-z]', '', alc)
                                             #final_choice_lst = final_choice[1].split()
                                             #for alc in final_choice_lst:
                                             #alc = re.sub(r'[^A-Za-z]', '', alc)
-                                            if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
-                                                return final_selection
+                                                if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
+                                                    return final_selection
                                         elif alcohol_answer in ('n', 'N'):
+                                            for alc in final_choice_lst:
+                                                alc = re.sub(r'[^A-Za-z]', '', alc)
+                                                alc_lst.append(alc.lower())
                                             no_alc = True
                                             #final_choice_lst = final_choice[1].split()
                                             #for alc in final_choice_lst:                                         
                                             #alc = re.sub(r'[^A-Za-z]', '', alc)
-                                            alc_lst.append(alc.lower())
+                                                
                                             no_alc = any(same in alc_lst for same in alcohol)
-                                            no_go_alc_words = any(no_go in no_go_words for no_go in final_choice[2])
+                                            for title_part in final_choice[0]:
+                                                title_part = final_choice[0].split()
+                                            no_go_alc_words = any(no_go in no_go_words for no_go in title_part)
                                             if no_alc == False and 'Drink' in final_choice[2] or no_alc == False and 'drink' in final_choice[2]:
-                                                return final_selection
+                                                if no_go_alc_words is False:
+                                                    return final_selection
                                             #else:
                                                 #raise ValueError(f'Invalid data: {alcohol_answer}! Please try again!\n')
                                         else:
