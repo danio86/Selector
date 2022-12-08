@@ -172,7 +172,6 @@ def get_media_selection():
                 final_selection.update({heading: data for heading, data in zip(keys[0], final_rand_choice)})
                 # final selection (global dict) gets keys and values
                 return final_selection
-                #break
             elif pre_choice in pre_choice_inputs:
                 media_type = input('\nHow much time you want to spend? \nEnter m for Movie or s for Series: ')
                 while 1:
@@ -334,7 +333,7 @@ def get_food_section():
                                                     continue
                                     elif vegy_answer in ('v', 'V'):
                                         final_choice_lst = final_choice[1].split()
-                                        for meat in final_choice_lst:                                         
+                                        for meat in final_choice_lst:
                                             meat = re.sub(r'[^A-Za-z]', '', meat)
                                             if meat.lower() not in meat_lst:
                                                 try:
