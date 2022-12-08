@@ -1,8 +1,16 @@
+# all libraries needed for the project
 import random
 import csv
 import re
 
-
+# Global Variables
+keys = []
+final_selection = {}
+genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
+no_go_words = ['Carrots', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Grilled', 'Pizza', 'Cookies']
+alcohol = ['tequila', 'averna', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
+meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
+topic = []
 class CleanPrintSelection():
     """
     Get final selection dict without brackets
@@ -33,15 +41,7 @@ class CleanPrintSelection():
         return clean_selection.strip()
 
 
-# val_new = []
-keys = []
-final_selection = {}
-genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
-#drinks = []
-no_go_words = ['Carrots', 'Sorbet', 'grilled', 'Cupcake', 'Shoulder', 'Grilled', 'Pizza', 'Cookies']
-alcohol = ['tequila', 'averna', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
-meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
-topic = []
+
 
 
 def choose_topic():
@@ -49,21 +49,20 @@ def choose_topic():
     Get topic choice input from user
     """
     print('\nWhat do you need help with? Food or TV?')
-    #top = input('Enter f for Food or t for TV: ')
     while 1:
         try:
             topic.clear()
+            # clears topic list (global var.) in case of user wants another selection
             top = input('Enter f for Food or t for TV: ')
             if top in ('t', 'T'):
                 top = 'imdb.csv'
-                # print(top, type(top))
                 topic.append(top)
-                # print(topic, topic[0])
                 return topic
             elif top in ('f', 'F'):
                 topic.append('recipe.csv')
                 return topic
             else:
+                # if user input is neither t,T or f,F >he/she has to type again
                 raise ValueError(f'Invalid data: {top}! Please try again!\n')
         except ValueError as value_error:
             print(value_error)
@@ -72,64 +71,26 @@ def choose_topic():
 
 def clean_file(topic):
     """
-    Get choice input from user
+    Opens and cleans the file of choosen topic
     """
     file = open(topic[0])
-    #file = open('test_film.csv')
+    # opens the (first) file in the topic list, reads it
+    # and separates items by comma
     rows = csv.reader(file, delimiter=',')
     watch = []
     if topic == ['imdb.csv']:
         for row in rows:
             watch.append(row)
+            keys.clear()
             keys.append(watch[0])
             values = watch[1:]
-            # value.append(values)
-            #print(values)
+            # seperates keys (headers) and values
     else:
+        # user wants to select food or a drink
         for row in rows:
             watch.append(row[1:4])
-            """ criterion = 1
-            while criterion < 6:
-                # print(row[2])
-                watch.append(row[criterion])
-                criterion += 2
-                print(criterion)
-                print(watch) """
-            #print(watch)
             keys.append(watch[0])
-            values = watch[1:] 
-            """ for val in  values:
-                if 'drinks' in val[2] or 'Drinks' in val[2] or 'punch' val[2]:
-                    with open('drinks.csv', mode='w')
-                    writer = csv.StrWriter()
-                    print(val[2])  """          
-            # value.append(values)
-            #print(values)
-            """ drink = values[2]
-            for cup in drink:
-                cups = drink.split()
-                for item in cups:
-                    if item == 'Drink' or item == 'drink':
-                        drinks.append(drink)
-                        print(drinks) """
-
-        """ for item in values:
-            # replace all ',' into ';' inbetween ""
-            new_str = re.sub(r'"[^"]+"', lambda x: x.group().replace(',', ';'), item[0])
-            val = new_str.split(',')
-            new_val = []
-            # replaces all ';' into , (after splitting!)
-            for dot_comma in val:
-                new_val.append(dot_comma.replace(';', ','))
-            val_new.append(new_val) """
-        #print(val_new [0])
-
-        # return keys
-    """ for drink in values[2]:
-        drinkable = drink.split()
-        if 'drink' in drinkable or 'Drink' in drinkable:
-            drinks.append(drink)
-            print(drinks) """
+            values = watch[1:]
     return values
 
 
@@ -203,22 +164,18 @@ def less_time(food_type):
                     return final_selection
 
 
-def get_selection():
+def get_media_selection():
     """
     Get choice import from user
     """
     while True:
         pre_choice = input('\nWhat do you want to watch? \nEnter r for Random-Choice or p for Pre-Selection: ')
-
-        #pre_choice = input('Enter your choice: ')
-        # use allways \n in inputs!
-
         random_inputs = ['r', 'R']
         pre_choice_inputs = ['p', 'P']
         try:
             if pre_choice in random_inputs:
                 final_rand_choice = random.choice(clean_file(topic))
-                #final_rand_choice = random.choice(val_new)
+                # calls the clean file def ist withs user topic choice and takes 1 item randomly
                 final_selection.update({heading: data for heading, data in zip(keys[0], final_rand_choice)})
                 #final_selection.update({heading: data for heading, data in zip(keys, final_rand_choice)})
                 #print(final_selection)
@@ -456,13 +413,6 @@ def get_food_section():
     return True
 
 
-#def pre_selection():
-   # """
-    #run all functions
-    #"""
-   # print('Do you want to watch a movie or a series?')
-
-
 def main():
     """
     run all functions
@@ -470,10 +420,9 @@ def main():
     choose_topic()
     clean_file(topic)
     if topic == ['imdb.csv']:
-        get_selection()
+        get_media_selection()
     else:
         get_food_section()
-    #print(final_selection.items(1),'test')
     clean_final_selection = CleanPrintSelection(final_selection)
     print(clean_final_selection)
     happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: ')
