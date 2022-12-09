@@ -82,6 +82,7 @@ def clean_file(topic):
         # user wants to select food or a drink
         for row in rows:
             watch.append(row[1:4])
+            keys.clear()
             keys.append(watch[0])
             values = watch[1:]
     return values
@@ -150,7 +151,8 @@ def less_time(food_type):
                 meat = re.sub(r'[^A-Za-z]', '', meat)
                 if food_type in ('v', 'V'):
                     if meat.lower() not in meat_lst and 'drink' not in preparation and 'punch' not in preparation:
-                        return final_selection
+                        if 'Matcha Latte' not in final_choice[0]:
+                            return final_selection
                 else:
                     if meat.lower() in meat_lst and 'drink' not in preparation and 'punch' not in preparation:
                         return final_selection
@@ -289,7 +291,7 @@ def get_food_section():
                                                 title_part = final_choice[0].split()
                                             no_go_alc_words = any(no_go in no_go_words for no_go in title_part)
                                             # checks whether the choice that meets all criteria is still wrong
-                                            if not no_alc and 'Drink' in final_choice[2] or not no_alc and 'drink' in final_choice[2] or not no_alc and 'Refresher' in final_choice[0]:
+                                            if not no_alc and 'Drink' in final_choice[2] or not no_alc and 'drink' in final_choice[2] or not no_alc and 'Refresher' in final_choice[0] or 'Matcha Latte' in final_choice[0]:
                                                 if no_go_alc_words is False:
                                                     return final_selection
                                         else:
@@ -371,6 +373,14 @@ def main():
     """
     run all functions
     """
+    print('\nWelcome to')
+    print(r""" 
+  ____  _____ _     _____ ____ _____ ___  ____  
+ / ___|| ____| |   | ____/ ___|_   _/ _ \|  _ \ 
+ \___ \|  _| | |   |  _|| |     | || | | | |_) |
+  ___) | |___| |___| |___ |___  | || |_| |  _ < 
+ |____/|_____|_____|_____\____| |_| \___/|_| \_\
+                                                  """)
     choose_topic()
     clean_file(topic)
     if topic == ['imdb.csv']:
@@ -381,6 +391,7 @@ def main():
     print(clean_final_selection)
     happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
     if happy_user in ('n', 'N'):
+        final_selection.clear()
         main()
     else:
         print('\nHave a good time!\n')
