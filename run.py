@@ -24,7 +24,6 @@ class CleanPrintSelection():
     def __str__(self, ):
         clean_selection = ' \n'
         print('')
-        
         for key, value in self.selection.items():
             if 'Title' in key or 'Ingredients' in key or 'Instructions' in key:
                 # checkst if selection is a recipe or a movie/series
@@ -32,7 +31,7 @@ class CleanPrintSelection():
                     value = value[2:-2]
                     val = value.replace("'", "")
                     value = val
-                clean_selection += '\n' + key + ':\n' + value + ' \n'            
+                clean_selection += '\n' + key + ':\n' + value + ' \n'
             else:
                 clean_selection += '\n' + key + ': ' + value + ' '
         return clean_selection.strip()
@@ -140,14 +139,14 @@ def less_time(food_type):
         for time in min_pos:
             minute = preparation[time-3:time-1]
             # gets the two characters before the 'Minute' strings (should be str-number)
-            minute = re.sub('\D', '', minute)
+            minute = re.sub('\\D', '', minute)
             # if str-number has just 1 digit, the rest gets removed. the number becomes an int number afterwards.
             minutes.append(int(minute))
         final_time = sum(minutes)
         if final_time < 30 and 'hour' not in final_choice[2]:
             # now it is verified that the recipe is vegy or meat and that it is not a drink.
             final_choice_lst = final_choice[1].split()
-            for meat in final_choice_lst:                                         
+            for meat in final_choice_lst:
                 meat = re.sub(r'[^A-Za-z]', '', meat)
                 if food_type in ('v', 'V'):
                     if meat.lower() not in meat_lst and 'drink' not in preparation and 'punch' not in preparation:
@@ -226,7 +225,7 @@ def get_media_selection():
                                     else:
                                         print(f'Invalid data: {answer_media_type}! Please try again!\n')
                         else:
-                            raise ValueError(f'Invalid data: {media_type}! Please try again!\n')              
+                            raise ValueError(f'Invalid data: {media_type}! Please try again!\n')
                     except ValueError as value_error:
                         print(value_error)
                         media_type = input('\nHow much time you want to spend?\nEnter m for Movie or s for Series: ')
@@ -290,7 +289,7 @@ def get_food_section():
                                                 title_part = final_choice[0].split()
                                             no_go_alc_words = any(no_go in no_go_words for no_go in title_part)
                                             # checks whether the choice that meets all criteria is still wrong
-                                            if no_alc == False and 'Drink' in final_choice[2] or no_alc == False and 'drink' in final_choice[2] or no_alc == False and 'Refresher' in final_choice[0]:
+                                            if not no_alc and 'Drink' in final_choice[2] or not no_alc and 'drink' in final_choice[2] or not no_alc and 'Refresher' in final_choice[0]:
                                                 if no_go_alc_words is False:
                                                     return final_selection
                                         else:
@@ -352,7 +351,6 @@ def get_food_section():
                                         raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
                                 except ValueError as value_error:
                                     print(value_error)
-                                    #print('\nAre you vegetarian? \nEnter v for I am vegy or m for I want meat: ')
                                     vegy_answer = input('\nAre you vegetarian? \nEnter v for I am vegy or m for I want meat: ')
                                     continue
                         else:
