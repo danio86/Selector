@@ -11,6 +11,9 @@ Users, who don't want to think about what to eat or which movie/series to watch,
 
 When the program is started, the user is asked for which topic he/she would like a choice to be made. The user then has the choice between food and TV. He/She then clicks either f (for food) or t (for tv). After that, the user can decide whether the selection should be random or not. If the user clicks yes (y), he gets a random selection. If the user clicks no (n), he/she must meet one or more selection criteria before he/she receives the final decision.
 
+  - Welcome Image
+<img src="images/screenshot_welcome.png" alt="Welcome Image">
+
 
 ## User Stories
 
@@ -31,6 +34,9 @@ When the program is started, the user is asked for which topic he/she would like
         - TV
             - The user can choose between movie or series, or get a completely random selection.
                 - Movies and Series can be chosen randomly or pre selected by genre.
+    
+    - TV or Food?
+<img src="images/screenshot_TVorFood.png" alt="2 Choices">
 
     - The program chooses completely randomly with or without selection criteria being met.
         - Once the user has clicked that he/she wants a decision, it can no longer be influenced.
@@ -53,7 +59,7 @@ When the program is started, the user is asked for which topic he/she would like
   For most of these funter implementations other datasets or urls are needed or the datasets have to be changed completely.
 
 
-### Future Features
+### Data Model
 
   - The data comes from two csv fils downloaded from [kaggle](https://www.kaggle.com/datasets).
   - Depending on the user's choice of topic, the files are opened and cleaned in one function.
@@ -71,12 +77,10 @@ I have manually tested the program by doing the following:
  - user story besed test cases (screenshots):
 
   - As a visiting user, I can easily understand the main purpose of the program. 
-      - Slogan and Slideshow
-      <img src="assets/images/screenshot-slogan-slideshow.png" alt="Slogan-Slideshow">
 
   - As a visiting user, I can use the program without any problems.
-      - Navigation
-      <img src="assets/images/screenshot-userstory-test-navigation.png" alt="Navigation">
+      - Welcome Image
+      <img src="images/_input_val_checking.png" alt="Welcome Image">
 
 ### Bugs
 
