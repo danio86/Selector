@@ -2,6 +2,8 @@
 import random
 import csv
 import re
+#import time
+from time import sleep
 
 
 # Global Variables
@@ -35,6 +37,19 @@ class CleanPrintSelection():
             else:
                 clean_selection += '\n' + key + ': ' + value + ' '
         return clean_selection.strip()
+
+
+def loadbar(interation, total, before='', after='', decimal=1, length=150, sign='>'):
+    """
+    Shows user that something happens
+    """
+    percent = ('{0:.}' + str(decimal) + 'f}').format(100 * (interation/float(total)))
+    filled_length = int(length * interation // total)
+    # produces a whole number
+    load_bar = sign * filled_length + '-' * length-filled_length
+    print(f'\r{before} |{load_bar}| {percent}% {after}', end='\r')
+    if interation == total:
+        print()
 
 
 def choose_topic():
@@ -256,12 +271,20 @@ def get_food_section():
                 food_type = input('\nDo you want to eat or to drink? \nEnter e for Eat or d for Drink: \n')
                 while True:
                     if 'd' in food_type or 'D' in food_type:
+                        print('\rthis could take a wile    ', end='')
+                        sleep(0.5)
+                        print('\rthis could take a wile >  ', end='')
+                        sleep(0.5)
+                        print('\rthis could take a wile >> ', end='')
+                        sleep(0.5)
+                        print('\rthis could take a wile >>>', end='')
                         final_choice = random.choice(clean_file(topic))
                         if 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
                             # final_choice[2] is the preparation (str) of the ramdomly chosen recipe
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                             no_drink = any(same in no_go_words for same in final_choice[0].split())
                             if not no_drink:
+                                print('')
                                 answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: \n')          
                                 if 'n' in answer_food_type or 'N' in answer_food_type:
                                     return final_selection
