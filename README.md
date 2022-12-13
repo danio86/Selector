@@ -3,15 +3,15 @@
 Selector is a Python terminal program which runs in the Code institute mock on Heroku.
 Users, who don't want to think about what to eat or which movie/series to watch, can use the program to get a random, or a pre choice based selection.
 
-- This is a live version of my project.
-<img src="assets/images/screenshot-media-query.png" alt="Responsice Mockup">
+- This is a live version of my project.<br>
+<img src="images/screenshot_responsive_mockup.png" alt="Responsive Mockup">
 
 
 ## How to use the program
 
 When the program is started, the user is asked for which topic he/she would like a choice to be made. The user then has the choice between food and TV. He/She then clicks either f (for food) or t (for tv). After that, the user can decide whether the selection should be random or not. If the user clicks yes (y), he gets a random selection. If the user clicks no (n), he/she must meet one or more selection criteria before he/she receives the final decision.
 
-  - Welcome Image
+- Welcome Image<br>
 <img src="images/screenshot_welcome.png" alt="Welcome Image">
 
 
@@ -35,7 +35,7 @@ When the program is started, the user is asked for which topic he/she would like
             - The user can choose between movie or series, or get a completely random selection.
                 - Movies and Series can be chosen randomly or pre selected by genre.
     
-    - TV or Food?
+- TV or Food?<br>
 <img src="images/screenshot_TVorFood.png" alt="2 Choices">
 
     - The program chooses completely randomly with or without selection criteria being met.
@@ -45,6 +45,9 @@ When the program is started, the user is asked for which topic he/she would like
     - Input valitation and error checking
         - The user can use uppercase or lowercase letters.
         - The user cannot press non-suggested buttons.
+
+- Input Validation<br>
+<img src="images/screenshot_input_val_checking.png" alt="Error Checking">
 
 ### Future Features
 
@@ -79,8 +82,9 @@ I have manually tested the program by doing the following:
   - As a visiting user, I can easily understand the main purpose of the program. 
 
   - As a visiting user, I can use the program without any problems.
-      - Welcome Image
-      <img src="images/_input_val_checking.png" alt="Welcome Image">
+
+  - Welcome Image<br>
+  <img src="images/screenshot_welcome.png" alt="Welcome Image">
 
 ### Bugs
 
@@ -107,7 +111,7 @@ The project was deployed using Code institut's mock for Heroku
     - **Deploy** was clicked.
 
 
-The live link can be found [here](https://danio86.github.io/coach-finder/index.html)
+The live link can be found [here](https://everyday-selector.herokuapp.com/)
 
 
 ## Credits 
