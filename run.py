@@ -8,7 +8,7 @@ import re
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
-no_go_words = ['Carrots', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Grilled', 'Pizza', 'Cookies']
+no_go_words = ['Carrots', 'Shortbread', 'Doughnuts', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas', 'Cabbage', 'Grilled', 'Pizza', 'Cookies']
 alcohol = ['tequila', 'averna', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
@@ -260,48 +260,50 @@ def get_food_section():
                         if 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
                             # final_choice[2] is the preparation (str) of the ramdomly chosen recipe
                             final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                            answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: \n')
-                            if 'n' in answer_food_type or 'N' in answer_food_type:
-                                return final_selection
-                            elif 'y' in answer_food_type or 'Y' in answer_food_type:
-                                alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: \n')
-                                while 1:
-                                    try:
-                                        alc_lst = []
-                                        final_choice = random.choice(clean_file(topic))
-                                        final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-                                        final_choice_lst = final_choice[1].split()
-                                        # creates a list of ingredients
-                                        if alcohol_answer in ('a', 'A'):
-                                            for alc in final_choice_lst:
-                                                alc = re.sub(r'[^A-Za-z]', '', alc)
-                                                # removes all characters of all ingredients which are not letters
-                                                if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
-                                                    # alcohol is a global list with all lowercase alcoholic ingredients
-                                                    return final_selection
-                                        elif alcohol_answer in ('n', 'N'):
-                                            for alc in final_choice_lst:
-                                                alc = re.sub(r'[^A-Za-z]', '', alc)
-                                                alc_lst.append(alc.lower())
-                                                # puts all cleaned lowercase ingredients in list
-                                            no_alc = True
-                                            no_alc = any(same in alc_lst for same in alcohol)
-                                            # checks if there is any same word (match) in the two lists. Returns True/False
-                                            for title_part in final_choice[0]:
-                                                title_part = final_choice[0].split()
-                                            no_go_alc_words = any(no_go in no_go_words for no_go in title_part)
-                                            # checks whether the choice that meets all criteria is still wrong
-                                            if not no_alc and 'Drink' in final_choice[2] or not no_alc and 'drink' in final_choice[2] or not no_alc and 'Refresher' in final_choice[0] or 'Matcha Latte' in final_choice[0]:
-                                                if no_go_alc_words is False:
-                                                    return final_selection
-                                        else:
-                                            raise ValueError(f'Invalid data: {alcohol_answer}! Please try again!\n')
-                                    except ValueError as value_error:
-                                        print(value_error)
-                                        alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: \n')
-                                        continue
-                            else:
-                                print(f'Invalid data: {answer_food_type}! Please try again!\n')
+                            no_drink = any(same in no_go_words for same in final_choice[0].split())
+                            if not no_drink:
+                                answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: \n')          
+                                if 'n' in answer_food_type or 'N' in answer_food_type:
+                                    return final_selection
+                                elif 'y' in answer_food_type or 'Y' in answer_food_type:
+                                    alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: \n')
+                                    while 1:
+                                        try:
+                                            alc_lst = []
+                                            final_choice = random.choice(clean_file(topic))
+                                            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+                                            final_choice_lst = final_choice[1].split()
+                                            # creates a list of ingredients
+                                            if alcohol_answer in ('a', 'A'):
+                                                for alc in final_choice_lst:
+                                                    alc = re.sub(r'[^A-Za-z]', '', alc)
+                                                    # removes all characters of all ingredients which are not letters
+                                                    if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
+                                                        # alcohol is a global list with all lowercase alcoholic ingredients
+                                                        return final_selection
+                                            elif alcohol_answer in ('n', 'N'):
+                                                for alc in final_choice_lst:
+                                                    alc = re.sub(r'[^A-Za-z]', '', alc)
+                                                    alc_lst.append(alc.lower())
+                                                    # puts all cleaned lowercase ingredients in list
+                                                no_alc = True
+                                                no_alc = any(same in alc_lst for same in alcohol)
+                                                # checks if there is any same word (match) in the two lists. Returns True/False
+                                                for title_part in final_choice[0]:
+                                                    title_part = final_choice[0].split()
+                                                no_go_alc_words = any(no_go in no_go_words for no_go in title_part)
+                                                # checks whether the choice that meets all criteria is still wrong
+                                                if not no_alc and 'Drink' in final_choice[2] or not no_alc and 'drink' in final_choice[2] or not no_alc and 'Refresher' in final_choice[0] or 'Matcha Latte' in final_choice[0]:
+                                                    if no_go_alc_words is False:
+                                                        return final_selection
+                                            else:
+                                                raise ValueError(f'Invalid data: {alcohol_answer}! Please try again!\n')
+                                        except ValueError as value_error:
+                                            print(value_error)
+                                            alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: \n')
+                                            continue
+                                else:
+                                    print(f'Invalid data: {answer_food_type}! Please try again!\n')
                     elif 'e' in food_type or 'E' in food_type:
                         final_choice = random.choice(clean_file(topic))
                         final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
@@ -389,12 +391,20 @@ def main():
         get_food_section()
     clean_final_selection = CleanPrintSelection(final_selection)
     print(clean_final_selection)
-    happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
-    if happy_user in ('n', 'N'):
-        final_selection.clear()
-        main()
-    else:
-        print('\nHave a good time!\n')
+    # happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
+    while True:
+        try:
+            happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
+            if happy_user in ('n', 'N'):
+                final_selection.clear()
+                main()
+            elif happy_user in ('y', 'Y'):
+                print('\nHave a good time!\n')
+                break
+            else:
+                raise ValueError(f'Invalid data: {happy_user}! Please try again!\n')
+        except ValueError as value_error:
+            print(value_error)
 
 
 main()
