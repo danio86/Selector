@@ -39,17 +39,17 @@ class CleanPrintSelection():
         return clean_selection.strip()
 
 
-def loadbar(interation, total, before='', after='', decimal=1, length=150, sign='>'):
-    """
-    Shows user that something happens
-    """
-    percent = ('{0:.}' + str(decimal) + 'f}').format(100 * (interation/float(total)))
-    filled_length = int(length * interation // total)
+#def loadbar(interation, total, before='', after='', decimal=1, length=150, sign='>'):
+    #"""
+    ##Shows user that something happens
+    #"""
+    #percent = ('{0:.}' + str(decimal) + 'f}').format(100 * (interation/float(total)))
+    #filled_length = int(length * interation // total)
     # produces a whole number
-    load_bar = sign * filled_length + '-' * length-filled_length
-    print(f'\r{before} |{load_bar}| {percent}% {after}', end='\r')
-    if interation == total:
-        print()
+    #load_bar = sign * filled_length + '-' * length-filled_length
+    #print(f'\r{before} |{load_bar}| {percent}% {after}', end='\r')
+    #if interation == total:
+        #print()
 
 
 def choose_topic():
