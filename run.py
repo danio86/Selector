@@ -10,7 +10,7 @@ from time import sleep
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
-no_go_words = ['Carrots', 'Shortbread', 'Doughnuts', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas', 'Cabbage', 'Grilled', 'Pizza', 'Cookies']
+no_go_words = ['Carrots', 'Shortbread', 'Oyster', 'Doughnuts', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas', 'Cabbage', 'Grilled', 'Pizza', 'Cookies']
 alcohol = ['tequila', 'averna', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
@@ -173,6 +173,21 @@ def less_time(food_type):
                         return final_selection
 
 
+def loading_time():
+    """
+    Produces a loadbar unitl user is waiting
+    """
+    print('\rThis could take a few minutes|   |', end='')
+    sleep(0.3)
+    print('\rThis could take a few minutes|>  |', end='')
+    sleep(0.3)
+    print('\rThis could take a few minutes|>> |', end='')
+    sleep(0.3)
+    print('\rThis could take a few minutes|>>>|', end='')
+    #sleep(0.3)
+    #print('\r                                  ', end='')
+
+
 def get_media_selection():
     """
     Gets all input choices (except topic choice) from user and gives it to an output object
@@ -271,13 +286,14 @@ def get_food_section():
                 food_type = input('\nDo you want to eat or to drink? \nEnter e for Eat or d for Drink: \n')
                 while True:
                     if 'd' in food_type or 'D' in food_type:
-                        print('\rthis could take a wile    ', end='')
+                        loading_time()
+                        """ print('\rthis could take a wile    ', end='')
                         sleep(0.5)
                         print('\rthis could take a wile >  ', end='')
                         sleep(0.5)
                         print('\rthis could take a wile >> ', end='')
                         sleep(0.5)
-                        print('\rthis could take a wile >>>', end='')
+                        print('\rthis could take a wile >>>', end='') """
                         final_choice = random.choice(clean_file(topic))
                         if 'Drink' in final_choice[2] or 'drink' in final_choice[2] or 'punch' in final_choice[2]:
                             # final_choice[2] is the preparation (str) of the ramdomly chosen recipe
@@ -291,6 +307,7 @@ def get_food_section():
                                 elif 'y' in answer_food_type or 'Y' in answer_food_type:
                                     alcohol_answer = input('\nAlcoholic drink for Party? \nEnter a for Alcohol or n for Non Alcoholic: \n')
                                     while 1:
+                                        loading_time()
                                         try:
                                             alc_lst = []
                                             final_choice = random.choice(clean_file(topic))
