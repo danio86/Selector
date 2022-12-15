@@ -10,7 +10,7 @@ from time import sleep
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
-no_go_words = ['Carrots', 'Shortbread', 'Oyster', 'Doughnuts', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas', 'Cabbage', 'Grilled', 'Pizza', 'Cookies']
+no_go_words = ['Carrots', 'Shortbread', 'Porridge', 'Oyster', 'Doughnuts', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas', 'Cabbage', 'Grilled', 'Pizza', 'Cookies']
 alcohol = ['tequila', 'averna', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
@@ -320,7 +320,9 @@ def get_food_section():
                                                     # removes all characters of all ingredients which are not letters
                                                     if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
                                                         # alcohol is a global list with all lowercase alcoholic ingredients
-                                                        return final_selection
+                                                        no_drink = any(same in no_go_words for same in final_choice[0].split())
+                                                        if not no_drink:
+                                                            return final_selection
                                             elif alcohol_answer in ('n', 'N'):
                                                 for alc in final_choice_lst:
                                                     alc = re.sub(r'[^A-Za-z]', '', alc)
@@ -430,7 +432,7 @@ def main():
     else:
         get_food_section()
     clean_final_selection = CleanPrintSelection(final_selection)
-    print(clean_final_selection)
+    print('\n',clean_final_selection)
     # happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
     while True:
         try:
