@@ -11,7 +11,7 @@ keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
 no_go_words = ['Carrots', 'Shortbread', 'Porridge', 'Oyster', 'Doughnuts', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas', 'Cabbage', 'Grilled', 'Pizza', 'Cookies']
-alcohol = ['tequila', 'averna', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
+alcohol = ['tequila', 'averna', 'soju', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
 topic = []
 

@@ -127,7 +127,8 @@ The live link can be found [here](https://everyday-selector.herokuapp.com/)
 - Instructions on how to replace things with regular expression was taken from [stackoverflow](https://stackoverflow.com/questions/50230821/regex-in-python-replace-multiple-occurrences-of-comma-between-double-quotes)
 - The basic code of the class object which returns a clean dictionary as a string without quotes and braces was taken from [youtube](https://www.youtube.com/watch?v=6ihzFB5qjBo)
 - Instructions on how to find parts of a string in a strin was taken from [stackoverflow]https://stackoverflow.com/questions/4664850/how-to-find-all-occurrences-of-a-substring)
-- Instructions on how to work with Python lists, stringsm dictionaries, loops, ... were taken from [Code Institute - Python lectures]
+- Instructions on how to work with Python lists, stringsm dictionaries, loops, ... were taken from [Code Institute - Python lectures](https://learn.codeinstitute.net/ci_program/diplomainfullstacksoftwarecommoncurriculum)
+- Instructions on how to work with Python lists, stringsm dictionaries, loops, ... were taken from [youtube](https://www.youtube.com/watch?v=LXV53NKfKQI)
 
 
 ### Media
