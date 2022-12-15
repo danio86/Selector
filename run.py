@@ -145,32 +145,41 @@ def less_time(food_type):
     Chooses recipes with preparation time less than 30 min.
     """
     while 1:
-        minutes = []
-        final_choice = random.choice(clean_file(topic))
-        final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-        preparation = final_choice[2]
-        # this is the whole preparation string
-        min_pos = [time for time in range(len(preparation)) if preparation.startswith('minutes', time)]
-        # finds the position of each str starts with 'Minutes' in the preparation string and puts it into a list
-        for time in min_pos:
-            minute = preparation[time-3:time-1]
-            # gets the two characters before the 'Minute' strings (should be str-number)
-            minute = re.sub('\\D', '', minute)
-            # if str-number has just 1 digit, the rest gets removed. the number becomes an int number afterwards.
-            minutes.append(int(minute))
-        final_time = sum(minutes)
-        if final_time < 30 and 'hour' not in final_choice[2]:
-            # now it is verified that the recipe is vegy or meat and that it is not a drink.
-            final_choice_lst = final_choice[1].split()
-            for meat in final_choice_lst:
-                meat = re.sub(r'[^A-Za-z]', '', meat)
+        try:
+            minutes = []
+            meat_in_recipe = []
+            final_choice = random.choice(clean_file(topic))
+            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+            preparation = final_choice[2]
+            # this is the whole preparation string
+            min_pos = [time for time in range(len(preparation)) if preparation.startswith('minutes', time)]
+            # finds the position of each str starts with 'Minutes' in the preparation string and puts it into a list
+            for time in min_pos:
+                minute = preparation[time-3:time-1]
+                # gets the two characters before the 'Minute' strings (should be str-number)
+                minute = re.sub(r'\D', '', minute)
+                # if str-number has just 1 digit, the rest gets removed. the number becomes an int number afterwards.
+                minutes.append(int(minute))
+            final_time = sum(minutes)
+            if final_time < 30 and 'hour' not in final_choice[2]:
+                # now it is verified that the recipe is vegy or meat and that it is not a drink.
+                final_choice_lst = final_choice[1].split()
+                for meat in final_choice_lst:
+                    meat = re.sub(r'[^A-Za-z]', '', meat)
+                    meat_in_recipe.append(meat.lower())
                 if food_type in ('v', 'V'):
-                    if meat.lower() not in meat_lst and 'drink' not in preparation and 'punch' not in preparation:
-                        if 'Matcha Latte' not in final_choice[0]:
-                            return final_selection
+                    no_meat = any(same in meat_lst for same in meat_in_recipe)
+                    if not no_meat:
+                        if 'drink' not in preparation and 'punch' not in preparation and 'cocktail' not in final_choice[0]:
+                            if 'Matcha Latte' not in final_choice[0]:
+                                return final_selection
                 else:
-                    if meat.lower() in meat_lst and 'drink' not in preparation and 'punch' not in preparation:
-                        return final_selection
+                    no_meat = any(same in meat_lst for same in meat_in_recipe)
+                    if no_meat:
+                        if 'drink' not in preparation and 'punch' not in preparation and 'cocktail' not in final_choice[0]:
+                            return final_selection
+        except ValueError:
+            continue
 
 
 def loading_time():
@@ -318,7 +327,7 @@ def get_food_section():
                                                 for alc in final_choice_lst:
                                                     alc = re.sub(r'[^A-Za-z]', '', alc)
                                                     # removes all characters of all ingredients which are not letters
-                                                    if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2]:
+                                                    if alc.lower() in alcohol and 'Drink' in final_choice[2] or alc.lower() in alcohol and 'drink' in final_choice[2] or alc.lower() in alcohol and 'punch' in final_choice[2] or alc.lower() in alcohol and 'cocktail' in final_choice[2]:
                                                         # alcohol is a global list with all lowercase alcoholic ingredients
                                                         no_drink = any(same in no_go_words for same in final_choice[0].split())
                                                         if not no_drink:
@@ -365,10 +374,10 @@ def get_food_section():
                                             if meat.lower() in meat_lst:
                                                 try:
                                                     answer_time = input("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: \n")
-                                                    if answer_time in ('i', 'I'):
+                                                    if answer_time in ('i', 'I') and 'cocktail' not in final_choice[0]:
                                                         return final_selection
                                                     elif answer_time in ('l', 'L'):
-                                                        time = less_time('v')
+                                                        time = less_time('m')
                                                         # calls less_time def with vegy argument
                                                         return time
                                                     else:
@@ -376,23 +385,28 @@ def get_food_section():
                                                 except ValueError as value_error:
                                                     print(value_error)
                                                     continue
-                                    elif vegy_answer in ('v', 'V'):
+                                    elif vegy_answer in ('v', 'V'):                          
+                                        meat_in_recipe = []
+                                        meat_in_recipe.clear
                                         final_choice_lst = final_choice[1].split()
                                         for meat in final_choice_lst:
                                             meat = re.sub(r'[^A-Za-z]', '', meat)
-                                            if meat.lower() not in meat_lst:
-                                                try:
-                                                    answer_time = input("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: \n")
-                                                    if answer_time in ('i', 'I'):
-                                                        return final_selection
-                                                    elif answer_time in ('l', 'L'):
-                                                        time = less_time('v')
-                                                        return time
-                                                    else:
-                                                        raise ValueError(f'Invalid data: {answer_time}! Please try again!\n')
-                                                except ValueError as value_error:
-                                                    print(value_error)
-                                                    continue
+                                            meat_in_recipe.append(meat.lower())
+                                        no_meat = any(same in meat_lst for same in meat_in_recipe)
+                                        if not no_meat:
+                                            try:
+                                                answer_time = input("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: \n")
+                                                if answer_time in ('i', 'I'):
+                                                    #no_meat = any(same in meat_lst for same in final_choice[1].split())
+                                                    return final_selection
+                                                elif answer_time in ('l', 'L'):
+                                                    time = less_time('v')
+                                                    return time
+                                                else:
+                                                    raise ValueError(f'Invalid data: {answer_time}! Please try again!\n')
+                                            except ValueError as value_error:
+                                                print(value_error)
+                                                continue
                                     else:
                                         raise ValueError(f'Invalid data: {vegy_answer}! Please try again!\n')
                                 except ValueError as value_error:
@@ -433,19 +447,17 @@ def main():
         get_food_section()
     clean_final_selection = CleanPrintSelection(final_selection)
     print('\n',clean_final_selection)
-    # happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
-    while True:
-        try:
-            happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
-            if happy_user in ('n', 'N'):
-                final_selection.clear()
-                main()
-            elif happy_user in ('y', 'Y'):
-                print('\nHave a good time!\n')
-                break
-            else:
-                raise ValueError(f'Invalid data: {happy_user}! Please try again!\n')
-        except ValueError as value_error:
+    try:
+        happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
+        if happy_user in ('n', 'N'):
+            final_selection.clear()
+            main()
+        elif happy_user in ('y', 'Y'):
+            print('\nHave a good time!\n')
+            return clean_final_selection
+        else:
+            raise ValueError(f'Invalid data: {happy_user}! Please try again!\n')
+    except ValueError as value_error:
             print(value_error)
 
 
