@@ -148,17 +148,22 @@ def less_time(food_type):
                                     zip(keys[0], final_choice)})
             preparation = final_choice[2]
             # this is the whole preparation string
-            min_pos = [time for time in range(len(preparation)) if preparation.startswith('minutes', time)]
-            # finds the position of each str starts with 'Minutes' in the preparation string and puts it into a list
+            min_pos = [time for time in range(len(preparation)) if
+                       preparation.startswith('minutes', time)]
+            # finds the position of each str starts with 'Minutes' in the
+            # preparation string and puts it into a list
             for time in min_pos:
                 minute = preparation[time-3:time-1]
-                # gets the two characters before the 'Minute' strings (should be str-number)
+                # gets the two characters before the 'Minute' strings
+                # (should be str-number)
                 minute = re.sub(r'\D', '', minute)
-                # if str-number has just 1 digit, the rest gets removed. the number becomes an int number afterwards.
+                # if str-number has just 1 digit, the rest gets removed.
+                # The number becomes an int number afterwards.
                 minutes.append(int(minute))
             final_time = sum(minutes)
             if final_time < 30 and 'hour' not in final_choice[2]:
-                # now it is verified that the recipe is vegy or meat and that it is not a drink.
+                # now it is verified that the recipe is vegy or meat and that
+                # it is not a drink.
                 final_choice_lst = final_choice[1].split()
                 for meat in final_choice_lst:
                     meat = re.sub(r'[^A-Za-z]', '', meat)
@@ -166,13 +171,15 @@ def less_time(food_type):
                 if food_type in ('v', 'V'):
                     no_meat = any(same in meat_lst for same in meat_in_recipe)
                     if not no_meat:
-                        if 'drink' not in preparation and 'punch' not in preparation and 'cocktail' not in final_choice[0]:
+                        if ('drink' not in preparation and 'punch' not in
+                            preparation and 'cocktail' not in final_choice[0]):
                             if 'Matcha Latte' not in final_choice[0]:
                                 return final_selection
                 else:
                     no_meat = any(same in meat_lst for same in meat_in_recipe)
                     if no_meat:
-                        if 'drink' not in preparation and 'punch' not in preparation and 'cocktail' not in final_choice[0]:
+                        if ('drink' not in preparation and 'punch' not in
+                            preparation and 'cocktail' not in final_choice[0]):
                             return final_selection
         except ValueError:
             continue
@@ -195,17 +202,21 @@ def loading_time():
 
 def get_media_selection():
     """
-    Gets all input choices (except topic choice) from user and gives it to an output object
+    Gets all input choices (except topic choice) from user and gives it to an
+    output object
     """
     while True:
-        pre_choice = input('\nWhat do you want to watch? \nEnter r for Random-Choice or p for Pre-Selection: \n')
+        print('What do you want to watch?')
+        pre_choice = input(
+            '\nEnter r for Random-Choice or p for Pre-Selection: \n')
         random_inputs = ['r', 'R']
         pre_choice_inputs = ['p', 'P']
         try:
             if pre_choice in random_inputs:
                 final_rand_choice = random.choice(clean_file(topic))
                 # gets the output of clean_file def and chooses 1 item randomly
-                final_selection.update({heading: data for heading, data in zip(keys[0], final_rand_choice)})
+                final_selection.update({heading: data for heading, data in
+                                        zip(keys[0], final_rand_choice)})
                 # final selection (global dict) gets keys and values
                 return final_selection
             elif pre_choice in pre_choice_inputs:
@@ -216,7 +227,8 @@ def get_media_selection():
                             while True:
                                 final_choice = random.choice(clean_file(topic))
                                 if 'Film' in final_choice:
-                                    # final_choice gives a string. If 'Film' in this string it is a movie not a seires.
+                                    # final_choice gives a string. If 'Film'
+                                    # in this string it's a movie.
                                     final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
                                     answer_media_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: \n')
                                     if 'n' in answer_media_type or 'N' in answer_media_type:
