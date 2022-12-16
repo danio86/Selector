@@ -61,6 +61,7 @@ When the program is started, the user is asked for which topic he/she would like
     - Selection criterion main course, appetizer or dessert for food
   
   For most of these funter implementations other datasets or urls are needed or the datasets have to be changed completely.
+  Since there are still so many extensions to come, the program is only called Selector and not specifically.
 
 
 ### Data Model
@@ -77,6 +78,9 @@ I have manually tested the program by doing the following:
  - Passed the code through the Code institute - PEP8 linter and confirmed that there are no problems.
  - Given invalid inputs like wrong letters, words, signs or numbers.
  - Tested in the Code institute Heroku terminal and in my local terminal. 
+
+ - CI Python Linter<br>
+  <img src="images/screenshot_pep8.png" alt="CI Python Linter">
 
  - user story besed test cases (screenshots):
 
