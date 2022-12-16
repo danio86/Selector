@@ -34,6 +34,7 @@ When the program is started, the user is asked for which topic he/she would like
         - TV
             - The user can choose between movie or series, or get a completely random selection.
                 - Movies and Series can be chosen randomly or pre selected by genre.
+                  - Since there is no children column, it was assumed that animated films/series are suitable for children. This is of course not always the case.
     
 - TV or Food?<br>
 <img src="images/screenshot_TVorFood.png" alt="2 Choices">
@@ -93,6 +94,7 @@ I have manually tested the program by doing the following:
    - This was solved with a list of words that must not appear in a drink ('Chicken', ...).
   - The final output still contained quotation marks.
    - This was solved using the Sting method in the Clean Sting class.
+  - A lot of lines are too long but this did not influence the functionality. It was fixed anyway, but this made the code much more ugly and unreadable. However, since it was the requirement that no errors were allowed to occur in the CI-PEP8-Validator, all cases were cleaned up by splitting the lines.
 
  - Unsolved Bugs
   - Beverage selection may take minutes. This is because the data set contains about 50,000 items but only a few beverages. Although this isn't actually a bug, it's annoying. 
