@@ -172,14 +172,14 @@ def less_time(food_type):
                     no_meat = any(same in meat_lst for same in meat_in_recipe)
                     if not no_meat:
                         if ('drink' not in preparation and 'punch' not in
-                           preparation and 'cocktail' not in final_choice[0]):
+                           preparation and 'cocktail' not in final_choice[2]):
                             if 'Matcha Latte' not in final_choice[0]:
                                 return final_selection
                 else:
                     no_meat = any(same in meat_lst for same in meat_in_recipe)
                     if no_meat:
                         if ('drink' not in preparation and 'punch' not in
-                           preparation and 'cocktail' not in final_choice[0]):
+                           preparation and 'cocktail' not in final_choice[2]):
                             return final_selection
         except ValueError:
             continue
@@ -550,7 +550,7 @@ def get_food_section():
                                                        answer_time in
                                                        ('i', 'I') and
                                                        'cocktail' not in
-                                                       final_choice[0]):
+                                                       final_choice[2]):
                                                         return final_selection
                                                     elif (answer_time in
                                                           ('l', 'L')):
