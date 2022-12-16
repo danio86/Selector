@@ -29,7 +29,7 @@ When the program is started, the user is asked for which topic he/she would like
         - Food
             - The user can choose between food or drinks, or get a completely random selection.
                 - Beverages can be alcoholic or non-alcoholic or randomly selected.
-                - Food can be vegetarian or contain meat or randomly selected.
+                - Food can be vegetarian or contain meat or randomly selected. In this case, fish is not counted as meat. The drink selection can take several minutes, which is due to the database. With over 50 thousand recipes, relatively few drinks are included.
                     - Food recipes can also be selected so that the cooking and/or baking time is shorter or longer than 30 minutes.
         - TV
             - The user can choose between movie or series, or get a completely random selection.

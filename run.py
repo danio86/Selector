@@ -2,7 +2,6 @@
 import random
 import csv
 import re
-#import time
 from time import sleep
 
 
@@ -10,9 +9,15 @@ from time import sleep
 keys = []
 final_selection = {}
 genre_lst = ['a', 'c', 'd', 'f', 'h', 'k', 'm', 'r', 's', 't']
-no_go_words = ['Carrots', 'Shortbread', 'Porridge', 'Oyster', 'Doughnuts', 'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas', 'Cabbage', 'Grilled', 'Pizza', 'Cookies']
-alcohol = ['tequila', 'averna', 'soju', 'cachaca', 'bitters', 'pale', 'lager', 'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin', 'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka', 'champagne', 'cognac', 'cider']
-meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami', 'ham']
+no_go_words = ['Carrots', 'Shortbread', 'Porridge', 'Oyster', 'Doughnuts',
+               'Chicken', 'Sorbet', 'grilled', 'Pork', 'Shoulder', 'Empanadas',
+               'Cabbage', 'Grilled', 'Pizza', 'Cookies']
+alcohol = ['tequila', 'averna', 'soju', 'cachaca', 'bitters', 'pale', 'lager',
+           'vermouth', 'rum', 'brandy', 'scotch', 'mezcal', 'pisco', 'gin',
+           'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka',
+           'champagne', 'cognac', 'cider']
+meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami',
+            'ham']
 topic = []
 
 
@@ -39,19 +44,6 @@ class CleanPrintSelection():
         return clean_selection.strip()
 
 
-#def loadbar(interation, total, before='', after='', decimal=1, length=150, sign='>'):
-    #"""
-    ##Shows user that something happens
-    #"""
-    #percent = ('{0:.}' + str(decimal) + 'f}').format(100 * (interation/float(total)))
-    #filled_length = int(length * interation // total)
-    # produces a whole number
-    #load_bar = sign * filled_length + '-' * length-filled_length
-    #print(f'\r{before} |{load_bar}| {percent}% {after}', end='\r')
-    #if interation == total:
-        #print()
-
-
 def choose_topic():
     """
     Get topic choice input from user
@@ -60,7 +52,8 @@ def choose_topic():
     while 1:
         try:
             topic.clear()
-            # clears topic list (global var.) in case of user wants another selection
+            # clears topic list (global var.) in case of user wants another
+            # selection
             top = input('Enter f for Food or t for TV: \n')
             if top in ('t', 'T'):
                 top = 'imdb.csv'
@@ -128,8 +121,10 @@ def genre_selection(media_type, genere_answer):
         media_type = 'Film'
     while True:
         final_choice = random.choice(clean_file(topic))
-        final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
-        # selection is not random program selects again and puts choice into the final dict.
+        final_selection.update({heading: data for heading, data in zip(keys[0],
+                                final_choice)})
+        # selection is not random program selects again and puts choice into
+        # the final dict.
         film = search_genre(final_selection, genere_answer)
         # calls seach_genre def with and gets the Output (True or False)
         if film:
@@ -149,7 +144,8 @@ def less_time(food_type):
             minutes = []
             meat_in_recipe = []
             final_choice = random.choice(clean_file(topic))
-            final_selection.update({heading: data for heading, data in zip(keys[0], final_choice)})
+            final_selection.update({heading: data for heading, data in
+                                    zip(keys[0], final_choice)})
             preparation = final_choice[2]
             # this is the whole preparation string
             min_pos = [time for time in range(len(preparation)) if preparation.startswith('minutes', time)]
@@ -193,8 +189,8 @@ def loading_time():
     print('\rThis could take a few minutes|>> |', end='')
     sleep(0.3)
     print('\rThis could take a few minutes|>>>|', end='')
-    #sleep(0.3)
-    #print('\r                                  ', end='')
+    # sleep(0.3)
+    # print('\r                                  ', end='')
 
 
 def get_media_selection():
@@ -310,7 +306,7 @@ def get_food_section():
                             no_drink = any(same in no_go_words for same in final_choice[0].split())
                             if not no_drink:
                                 print('')
-                                answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: \n')          
+                                answer_food_type = input('\nMore selective criteria? \nEnter y for Yes or n for No: \n')
                                 if 'n' in answer_food_type or 'N' in answer_food_type:
                                     return final_selection
                                 elif 'y' in answer_food_type or 'Y' in answer_food_type:
@@ -385,7 +381,7 @@ def get_food_section():
                                                 except ValueError as value_error:
                                                     print(value_error)
                                                     continue
-                                    elif vegy_answer in ('v', 'V'):                          
+                                    elif vegy_answer in ('v', 'V'):
                                         meat_in_recipe = []
                                         meat_in_recipe.clear
                                         final_choice_lst = final_choice[1].split()
@@ -397,7 +393,6 @@ def get_food_section():
                                             try:
                                                 answer_time = input("\nHow much time you want to spend (cutting/mixing excluded)?\nEnter i for I don't care or l for less than 30 Minutes: \n")
                                                 if answer_time in ('i', 'I'):
-                                                    #no_meat = any(same in meat_lst for same in final_choice[1].split())
                                                     return final_selection
                                                 elif answer_time in ('l', 'L'):
                                                     time = less_time('v')
@@ -432,11 +427,11 @@ def main():
     run all functions
     """
     print('\nWelcome to')
-    print(r""" 
-  ____  _____ _     _____ ____ _____ ___  ____  
- / ___|| ____| |   | ____/ ___|_   _/ _ \|  _ \ 
+    print(r"""
+  ____  _____ _     _____ ____ _____ ___  ____
+ / ___|| ____| |   | ____/ ___|_   _/ _ \|  _ \
  \___ \|  _| | |   |  _|| |     | || | | | |_) |
-  ___) | |___| |___| |___ |___  | || |_| |  _ < 
+  ___) | |___| |___| |___ |___  | || |_| |  _ <
  |____/|_____|_____|_____\____| |_| \___/|_| \_\
                                                   """)
     choose_topic()
@@ -446,7 +441,7 @@ def main():
     else:
         get_food_section()
     clean_final_selection = CleanPrintSelection(final_selection)
-    print('\n',clean_final_selection)
+    print('\n', clean_final_selection)
     try:
         happy_user = input('\nAre you happy? \nEnter y for Yes or n for new Selection: \n')
         if happy_user in ('n', 'N'):
@@ -458,7 +453,7 @@ def main():
         else:
             raise ValueError(f'Invalid data: {happy_user}! Please try again!\n')
     except ValueError as value_error:
-            print(value_error)
+        print(value_error)
 
 
 main()
