@@ -17,7 +17,7 @@ alcohol = ['tequila', 'averna', 'soju', 'cachaca', 'bitters', 'pale', 'lager',
            'sherry', 'bourbon', 'wine', 'beer', 'aperol', 'mezcal', 'vodka',
            'champagne', 'cognac', 'cider']
 meat_lst = ['sausage', 'meat', 'chicken', 'beef', 'lamb', 'turkey', 'salami',
-            'ham']
+            'ham', 'steak']
 topic = []
 
 
@@ -141,6 +141,7 @@ def less_time(food_type):
     """
     while 1:
         try:
+            loading_time()
             minutes = []
             meat_in_recipe = []
             final_choice = random.choice(clean_file(topic))
@@ -196,8 +197,6 @@ def loading_time():
     print('\rThis could take a few minutes|>> |', end='')
     sleep(0.3)
     print('\rThis could take a few minutes|>>>|', end='')
-    # sleep(0.3)
-    # print('\r                                  ', end='')
 
 
 def get_media_selection():
@@ -513,12 +512,14 @@ def get_food_section():
                                                             zip(keys[0],
                                                                 final_choice)})
                                     if vegy_answer in ('m', 'M'):
+                                        loading_time()
                                         final_choice_lst = (final_choice[1]
                                                             .split())
                                         for meat in final_choice_lst:
                                             meat = re.sub(r'[^A-Za-z]', '',
                                                           meat)
                                             if meat.lower() in meat_lst:
+                                                print('')
                                                 try:
                                                     answer_time = input("\nHow"
                                                                         " much"
@@ -568,6 +569,7 @@ def get_food_section():
                                                     print(val_error)
                                                     continue
                                     elif vegy_answer in ('v', 'V'):
+                                        loading_time()
                                         meat_in_recipe = []
                                         meat_in_recipe.clear
                                         final_choice_lst = (final_choice[1]
@@ -650,7 +652,7 @@ def main():
     print('\n', clean_final_selection)
     try:
         happy_user = input('\nAre you happy? \nEnter y for Yes or'
-                           'n for new Selection: \n')
+                           ' n for new Selection: \n')
         if happy_user in ('n', 'N'):
             final_selection.clear()
             main()

@@ -29,7 +29,7 @@ When the program is started, the user is asked for which topic he/she would like
         - Food
             - The user can choose between food or drinks, or get a completely random selection.
                 - Beverages can be alcoholic or non-alcoholic or randomly selected.
-                - Food can be vegetarian or contain meat or randomly selected. In this case, fish is not counted as meat. The drink selection can take several minutes, which is due to the database. With over 50 thousand recipes, relatively few drinks are included.
+                - Food can be vegetarian or contain meat or randomly selected. In this case, fish is not counted as meat. The drink selection can take several minutes (especially non-alcoholic beverages), which is due to the database. With over 50 thousand recipes, relatively few drinks are included.
                     - Food recipes can also be selected so that the cooking and/or baking time is shorter or longer than 30 minutes.
         - TV
             - The user can choose between movie or series, or get a completely random selection.
@@ -101,8 +101,8 @@ I have manually tested the program by doing the following:
   - A lot of lines are too long but this did not influence the functionality. It was fixed anyway, but this made the code much more ugly and unreadable. However, since it was the requirement that no errors were allowed to occur in the CI-PEP8-Validator, all cases were cleaned up by splitting the lines.
 
  - Unsolved Bugs
-  - Beverage selection may take minutes. This is because the data set contains about 50,000 items but only a few beverages. Although this isn't actually a bug, it's annoying. 
-  - Some lines are too long but this does not influence the functionality.
+  - Beverage selection may take minutes (especially non-alcoholic beverages). This is because the data set contains about 50,000 items but only a few beverages. Although this isn't actually a bug, it's annoying.
+  - Sometimes you get wrong output because certain keywords are missing in the description of the output. For example, some drink recipes are missing the word "drink" or "cocktail". An attempt was made to correct such errors with appropriate keyword lists. But with this amount of data it can still happen.
 
 
 
