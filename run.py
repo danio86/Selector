@@ -120,6 +120,7 @@ def genre_selection(media_type, genere_answer):
     else:
         media_type = 'Film'
     while True:
+        loading_time()
         final_choice = random.choice(clean_file(topic))
         final_selection.update({heading: data for heading, data in zip(keys[0],
                                 final_choice)})
@@ -267,12 +268,11 @@ def get_media_selection():
                                                     return movie
                                                 elif (genere_answer
                                                       not in genre_lst):
-                                                    raise
-                                                ValueError('Invalid'
-                                                           'data:'
-                                                           f'{genere_answer}'
-                                                           'Please try'
-                                                           'again!\n')
+                                                    raise ValueError(
+                                                        'Invalid data: '
+                                                        f'{genere_answer}'
+                                                        ' Please try '
+                                                        'again!\n')
                                             except ValueError as value_error:
                                                 print(value_error)
                                                 continue
@@ -313,11 +313,10 @@ def get_media_selection():
                                                     return series
                                                 elif (genere_answer not in
                                                       genre_lst):
-                                                    raise
-                                                ValueError('Invalid data:'
-                                                           f'{genere_answer}!'
-                                                           'Please try'
-                                                           'again!\n')
+                                                    raise ValueError(
+                                                        'Invalid data: '
+                                                        f'{genere_answer}! '
+                                                        'Please try again!\n')
                                             except ValueError as value_error:
                                                 print(value_error)
                                                 continue
@@ -475,7 +474,7 @@ def get_food_section():
                                                         return final_selection
                                             else:
                                                 raise ValueError(
-                                                    'Invalid data: '
+                                                    '\nInvalid data: '
                                                     f'{alcohol_answer}! '
                                                     'Please try again!\n')
                                         except ValueError as value_error:
@@ -569,7 +568,6 @@ def get_food_section():
                                                     print(val_error)
                                                     continue
                                     elif vegy_answer in ('v', 'V'):
-                                        loading_time()
                                         meat_in_recipe = []
                                         meat_in_recipe.clear
                                         final_choice_lst = (final_choice[1]
@@ -581,6 +579,7 @@ def get_food_section():
                                         no_meat = any(same in meat_lst for
                                                       same in meat_in_recipe)
                                         if not no_meat:
+                                            print('')
                                             try:
                                                 answer_time = input(
                                                     "\nHow much time you want "
